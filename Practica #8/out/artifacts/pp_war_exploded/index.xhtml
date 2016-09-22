@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+   <h:outputStylesheet library="css" name="table-style.css"  />
+   <h:link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
+
+
+</h:head>
+   <h:body>
+      <h1>Contactos</h1>
+      <h:form>
+         <h:dataTable var="c" value="#{contacto.contactos}" styleClass="order-table"
+                      headerClass="order-table-header"
+                      rowClasses="order-table-odd-row,order-table-even-row">
+
+            <h:column>
+               <f:facet name="header">ID</f:facet>
+               #{c.id}
+            </h:column>
+
+            <h:column>
+               <!-- column header -->
+               <f:facet name="header">Nombre</f:facet>
+               <!-- row record -->
+               #{c.firstName}
+            </h:column>
+
+            <h:column>
+               <f:facet name="header">Apellido</f:facet>
+               #{c.lastName}
+            </h:column>
+
+            <h:column>
+               <f:facet name="header">Teléfono</f:facet>
+               #{c.phone}
+            </h:column>
+
+            <h:column>
+               <f:facet name="header">Email</f:facet>
+               #{c.email}
+            </h:column>
+
+            <h:column>
+               <f:facet name="header">Dirección</f:facet>
+               #{c.adress}
+            </h:column>
+
+
+
+            <h:column>
+
+               <f:facet name="header">Borrar</f:facet>
+
+               <h:commandLink value="Borrar" styleClass="fa-close"
+                              action="#{contacto.delete(c)}" />
+
+            </h:column>
+            <h:column>
+
+               <f:facet name="header">Editar</f:facet>
+
+               <h:commandLink value="Editar"
+                              action="#{contacto.text(c)}" />
+
+            </h:column>
+         </h:dataTable>
+         </h:form>
+      <h2>Introduzca el contacto</h2>
+      <h:form>
+      <table>
+         <tr>
+            <td>Nombre :</td>
+            <td><h:inputText size="15" value="#{contacto.firstName}" required="true" /></td>
+         </tr>
+         <tr>
+            <td>Apellido :</td>
+            <td><h:inputText size="20" value="#{contacto.lastName}" required="true"  /></td>
+         </tr>
+         <tr>
+            <td>Telefono :</td>
+            <td><h:inputText size="10" value="#{contacto.phone}" required="true" /></td>
+         </tr>
+         <tr>
+            <td>Email :</td>
+            <td><h:inputText size="20" value="#{contacto.email}" required="true" /></td>
+         </tr>
+         <tr>
+            <td>Direccion :</td>
+            <td><h:inputText size="20" value="#{contacto.adress}" required="true" /></td>
+         </tr>
+      </table>
+
+      <h:commandButton value="Añadir" action="#{contacto.add(contacto.firstName,contacto.lastName,contacto.phone,contacto.email,contacto.adress)}" />
+
+      </h:form>
+   </h:body>
+</html>
