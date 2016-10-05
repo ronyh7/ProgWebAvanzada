@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://java.sun.com/jsf/composite">
+
+<h:head>
+    <title>Practica #9</title>
+</h:head>
+
+<h:body>
+    <h:form>
+        <p:growl id="messages"/>
+
+        <p:menubar>
+            <p:menuitem value="Home" action="helloworld"  icon="ui-icon-home"/>
+
+            <p:menuitem value="Crear Usuario" action="crearUsuario" ajax="false" icon="ui-icon-contact"/>
+
+            <p:menuitem value="Crear Producto" action="crearProducto" ajax="false" icon="ui-icon-pencil"/>
+
+            <p:menuitem value="#{menuBean.usuarioLogueado.carro.productos.size()}" action="carro" ajax="false" icon="ui-icon-cart" />
+
+            <f:facet name="options">
+                <p:inputText style="margin-right:10px" placeholder="Search"/>
+                <p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
+            </f:facet>
+        </p:menubar>
+
+
+        <p:dataList value="#{menuBean.productos}" var="p" pt:data-inset="true" paginator="true" rows="5">
+            <f:facet name="header">
+                Lista de Productos
+            </f:facet>
+            <h:outputLink value="#{menuBean.producto(p.id)}">
+               <!-- <p:graphicImage name="demo/images/car/#{car.brand}-big.gif" /> -->
+                <h2>#{p.nombre}</h2>
+                <p>#{p.descripcion}</p>
+                <p class="ui-li-aside"><strong>#{p.cantidad}</strong></p>
+            </h:outputLink>
+            <f:facet name="footer">
+                Lista de Productos
+            </f:facet>
+        </p:dataList>
+    </h:form>
+</h:body>
+</html>

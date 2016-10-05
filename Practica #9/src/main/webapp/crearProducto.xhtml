@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Practica #9</title>
+</h:head>
+
+<h:body>
+    <h:form>
+        <p:growl id="messages"/>
+        <p:menubar>
+            <p:menuitem value="Home}" action="helloworld"  icon="ui-icon-home"/>
+
+            <p:menuitem value="Crear Usuario" action="crearUsuario" ajax="false" icon="ui-icon-contact"/>
+
+            <p:menuitem value="Crear Producto" action="crearProducto" ajax="false" icon="ui-icon-pencil"/>
+
+            <p:menuitem value="#{menuBean.usuarioLogueado.carro.productos.size()}" action="carro" ajax="false" icon="ui-icon-cart" />
+
+            <f:facet name="options">
+                <p:inputText style="margin-right:10px" placeholder="Search"/>
+                <p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
+            </f:facet>
+        </p:menubar>
+
+    </h:form>
+
+    <p:dataTable var="p" value="#{productoBean.menu.productos}" >
+
+        <p:column>
+            <f:facet name="header">Nombre: </f:facet>
+            #{p.nombre}
+        </p:column>
+    </p:dataTable>
+
+    <h2>Introduzca el Producto</h2>
+    <h:form>
+        <table>
+            <tr>
+                <td>Id :</td>
+                <td><h:inputText size="15" value="#{productoBean.id}" required="true" /></td>
+            </tr>
+            <tr>
+                <td>Nombre :</td>
+                <td><h:inputText size="20" value="#{productoBean.nombre}" required="true"  /></td>
+            </tr>
+            <tr>
+                <td>Descripcion :</td>
+                <td><h:inputText size="10" value="#{productoBean.descripcion}" required="true" /></td>
+            </tr>
+            <tr>
+                <td>Cantidad :</td>
+                <td><h:inputText size="20" value="#{productoBean.cantidad}" required="true" >
+                    <f:validateLongRange minimum="1"/>
+                </h:inputText></td>
+            </tr>
+        </table>
+        <h:commandButton value="Añadir" action="#{productoBean.addProducto()}" />
+    </h:form>
+</h:body>
+</html>

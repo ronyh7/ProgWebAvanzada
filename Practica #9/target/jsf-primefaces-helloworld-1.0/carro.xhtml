@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Practica #9</title>
+</h:head>
+
+<h:body>
+    <h:form>
+        <p:growl id="messages"/>
+        <p:menubar>
+            <p:menuitem value="Home" action="helloworld"  icon="ui-icon-home"/>
+
+            <p:menuitem value="Crear Usuario" action="crearUsuario" ajax="false" icon="ui-icon-contact"/>
+
+            <p:menuitem value="Crear Producto" action="crearProducto" ajax="false" icon="ui-icon-pencil"/>
+
+            <p:menuitem value="#{menuBean.usuarioLogueado.carro.productos.size()}" action="carro" ajax="false" icon="ui-icon-cart" />
+
+            <f:facet name="options">
+                <p:inputText style="margin-right:10px" placeholder="Search"/>
+                <p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
+            </f:facet>
+        </p:menubar>
+
+    </h:form>
+
+    <p:dataTable var="c" value="#{carroBean.carro.values.toString}" >
+
+        <p:column>
+            <f:facet name="header">Nombre: </f:facet>
+            #{c}
+        </p:column>
+    </p:dataTable>
+
+    <h2>Introduzca el contacto</h2>
+    <h:form>
+        <table>
+            <tr>
+                <td>Username :</td>
+                <td><h:inputText size="15" value="#{usuarioBean.username}" required="true" /></td>
+            </tr>
+            <tr>
+                <td>Contraseña :</td>
+                <td><h:inputText size="20" value="#{usuarioBean.password}" required="true"  /></td>
+            </tr>
+            <tr>
+                <td>Nombre :</td>
+                <td><h:inputText size="10" value="#{usuarioBean.nombre}" required="true" /></td>
+            </tr>
+            <tr>
+                <td>Apellido :</td>
+                <td><h:inputText size="20" value="#{usuarioBean.apellido}" required="true" /></td>
+            </tr>
+            <tr>
+                <td>Fecha de Nacimiento :</td>
+                <td><h:inputText size="8" value="#{usuarioBean.fechaDeNacimento}" required="true" >
+                    <f:convertDateTime pattern="dd-MM-yyyy" />
+                </h:inputText>
+                </td>
+            </tr>
+        </table>
+
+        <h:commandButton value="Añadir" action="#{usuarioBean.nuevoUsuario}" />
+    </h:form>
+</h:body>
+</html>
