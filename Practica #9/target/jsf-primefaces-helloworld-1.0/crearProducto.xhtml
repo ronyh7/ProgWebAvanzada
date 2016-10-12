@@ -12,17 +12,19 @@
     <h:form>
         <p:growl id="messages"/>
         <p:menubar>
-            <p:menuitem value="Home}" action="helloworld"  icon="ui-icon-home"/>
+            <p:menuitem value="Home" action="productosDisponibles"  icon="ui-icon-home"/>
 
             <p:menuitem value="Crear Usuario" action="crearUsuario" ajax="false" icon="ui-icon-contact"/>
 
-            <p:menuitem value="Crear Producto" action="crearProducto" ajax="false" icon="ui-icon-pencil"/>
+            <p:menuitem value="Crear Producto" action="crearProducto" ajax="false" icon="ui-icon-pencil" rendered="#{menuBean.usuarioLogueado.admin}"/>
 
-            <p:menuitem value="#{menuBean.usuarioLogueado.carro.productos.size()}" action="carro" ajax="false" icon="ui-icon-cart" />
+            <p:menuitem value="Historial de Ventas" action="historialVentas" ajax="false" icon="ui-icon-pencil" rendered="#{menuBean.usuarioLogueado.admin}"/>
+
+            <p:menuitem value="#{menuBean.usuarioLogueado.carrito.size()}" action="carro" ajax="false" icon="ui-icon-cart" />
 
             <f:facet name="options">
-                <p:inputText style="margin-right:10px" placeholder="Search"/>
-                <p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
+                <p:commandButton value="Logout" action="#{menuBean.logout()}" icon="ui-icon-extlink" rendered="#{menuBean.userExists()}" update="@all"/>
+                <p:commandButton value="Login" onclick="PF('dlg').show();" onkeydown="PF('dlg').show();" icon="ui-icon-extlink" rendered="#{menuBean.userDoesnExist()}" />
             </f:facet>
         </p:menubar>
 
@@ -37,28 +39,62 @@
     </p:dataTable>
 
     <h2>Introduzca el Producto</h2>
-    <h:form>
-        <table>
-            <tr>
-                <td>Id :</td>
-                <td><h:inputText size="15" value="#{productoBean.id}" required="true" /></td>
-            </tr>
-            <tr>
-                <td>Nombre :</td>
-                <td><h:inputText size="20" value="#{productoBean.nombre}" required="true"  /></td>
-            </tr>
-            <tr>
-                <td>Descripcion :</td>
-                <td><h:inputText size="10" value="#{productoBean.descripcion}" required="true" /></td>
-            </tr>
-            <tr>
-                <td>Cantidad :</td>
-                <td><h:inputText size="20" value="#{productoBean.cantidad}" required="true" >
+    <h:form enctype="multipart/form-data">
+        <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+            <h:outputLabel value="Nombre:" />
+                <p:inputText value="#{productoBean.nombre}" required="true" disabled="#{!menuBean.usuarioLogueado.admin}" />
+
+
+            <h:outputLabel value="Descripcion:" />
+
+            <p:inputTextarea value="#{productoBean.descripcion}" required="true" disabled="#{!menuBean.usuarioLogueado.admin}" />
+
+
+            <h:outputLabel value="Cantidad" />
+                <p:inputText value="#{productoBean.cantidad}" required="true" disabled="#{!menuBean.usuarioLogueado.admin}" >
                     <f:validateLongRange minimum="1"/>
-                </h:inputText></td>
-            </tr>
-        </table>
-        <h:commandButton value="Añadir" action="#{productoBean.addProducto()}" />
+                </p:inputText>
+
+
+            <h:outputLabel value="Precio:" />
+
+                <p:inputText value="#{productoBean.precio}" required="true" disabled="#{!menuBean.usuarioLogueado.admin}" >
+                    <f:validateLongRange minimum="1"/>
+                </p:inputText>
+
+            <p:fileUpload value="#{productoBean.file}" mode="simple" required="true" skinSimple="true"/>
+            <p:commandButton value="Añadir" ajax="false" action="#{productoBean.addProducto()}" icon="ui-icon-plus" />
+        </h:panelGrid>
+
+
     </h:form>
+    <h:form>
+        <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+        <p:dialog header="Login" widgetVar="dlg" resizable="false">
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel for="username" value="Username:" />
+                <p:inputText id="username" value="#{usuarioBean.username}" required="true" label="username" />
+
+                <h:outputLabel for="password" value="Password:" />
+                <p:password id="password" value="#{usuarioBean.password}" required="true" label="password" />
+
+                <f:facet name="footer">
+                    <p:commandButton value="Login" update="@all" action="#{usuarioBean.login()}"
+                                     oncomplete="handleLoginRequest(xhr, status, args)"  />
+                </f:facet>
+            </h:panelGrid>
+        </p:dialog>
+    </h:form>
+    <script type="text/javascript">
+        function handleLoginRequest(xhr, status, args) {
+            if(args.validationFailed || !args.loggedIn) {
+                PF('dlg').jq.effect("shake", {times:5}, 100);
+            }
+            else {
+                PF('dlg').hide();
+                $('#loginLink').fadeOut();
+            }
+        }
+    </script>
 </h:body>
 </html>

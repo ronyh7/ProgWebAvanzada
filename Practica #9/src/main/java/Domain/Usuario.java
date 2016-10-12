@@ -1,5 +1,6 @@
 package Domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -12,27 +13,20 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private Date fechaDeNacimento;
-    private Carro carro;
-    private HashMap<Producto,Integer> carrito;
+    private boolean admin;
+    private HashMap<Long,Integer> carrito;
+    private ArrayList<ProductoComprado> productosComprados;
 
-    public Usuario(String username, String password, String nombre, String apellido, Date fechaDeNacimento){
+
+    public Usuario(String username, String password, String nombre, String apellido,Date fechaDeNacimento, boolean admin){
         this.username = username;
         this.password = password;
         this.nombre = nombre;
         this.apellido= apellido;
         this.fechaDeNacimento = fechaDeNacimento;
-        this.carro = new Carro();
-        this.setCarrito(new HashMap());
-
-    }
-
-    public Usuario(String username, String password, String nombre, String apellido){
-        this.username = username;
-        this.password = password;
-        this.nombre = nombre;
-        this.apellido= apellido;
-        this.carro = new Carro();
-
+        this.admin= admin;
+        this.carrito= new HashMap<>();
+        this.productosComprados = new ArrayList<>();
     }
 
     public String getNombre() {
@@ -49,14 +43,6 @@ public class Usuario {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
-    }
-
-    public Carro getCarro() {
-        return carro;
-    }
-
-    public void setCarro(Carro carro) {
-        this.carro = carro;
     }
 
     public String getUsername() {
@@ -83,11 +69,27 @@ public class Usuario {
         this.fechaDeNacimento = fechaDeNacimento;
     }
 
-    public HashMap<Producto, Integer> getCarrito() {
+    public HashMap<Long, Integer> getCarrito() {
         return carrito;
     }
 
-    public void setCarrito(HashMap<Producto, Integer> carrito) {
+    public void setCarrito(HashMap<Long, Integer> carrito) {
         this.carrito = carrito;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
+    public ArrayList<ProductoComprado> getProductosComprados() {
+        return productosComprados;
+    }
+
+    public void setProductosComprados(ArrayList<ProductoComprado> productosComprados) {
+        this.productosComprados = productosComprados;
     }
 }

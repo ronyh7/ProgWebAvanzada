@@ -12,27 +12,30 @@
     <h:form>
         <p:growl id="messages"/>
         <p:menubar>
-            <p:menuitem value="Home" action="helloworld"  icon="ui-icon-home"/>
+            <p:menuitem value="Home" action="crearUsuario"  icon="ui-icon-home"/>
 
-            <p:menuitem value="Crear Usuario" action="crearUsuario" ajax="false" icon="ui-icon-contact"/>
+            <p:menuitem value="Crear Producto" action="crearProducto" ajax="false" icon="ui-icon-pencil" rendered="#{menuBean.usuarioLogueado.admin}"/>
 
-            <p:menuitem value="Crear Producto" action="crearProducto" ajax="false" icon="ui-icon-pencil"/>
+            <p:menuitem value="Historial de Ventas" action="historialVentas" ajax="false" icon="ui-icon-pencil" rendered="#{menuBean.usuarioLogueado.admin}"/>
 
-            <p:menuitem value="#{menuBean.usuarioLogueado.carro.productos.size()}" action="carro" ajax="false" icon="ui-icon-cart" />
+            <p:menuitem value="#{menuBean.usuarioLogueado.carrito.size()}" action="#" ajax="false" icon="ui-icon-cart" />
 
             <f:facet name="options">
-                <p:inputText style="margin-right:10px" placeholder="Search"/>
-                <p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
+                <p:commandButton value="Logout" action="#{menuBean.logout()}" icon="ui-icon-extlink" rendered="#{menuBean.userExists()}" update="@all"/>
+                <p:commandButton value="Login" onclick="PF('dlg').show();" onkeydown="PF('dlg').show();" icon="ui-icon-extlink" rendered="#{menuBean.userDoesnExist()}" />
             </f:facet>
         </p:menubar>
 
     </h:form>
 
     <p:dataTable var="u" value="#{usuarioBean.menu.usuarios}" >
-
         <p:column>
-            <f:facet name="header">Nombre: </f:facet>
-            #{u.nombre}
+            <f:facet name="header">Username: </f:facet>
+            #{u.username}
+        </p:column>
+        <p:column>
+            <f:facet name="header">is Admin? </f:facet>
+            #{u.admin}
         </p:column>
     </p:dataTable>
 
@@ -41,30 +44,62 @@
         <table>
             <tr>
                 <td>Username :</td>
-                <td><h:inputText size="15" value="#{usuarioBean.username}" required="true" /></td>
+                <td><p:inputText size="15" value="#{usuarioBean.username}" required="true" /></td>
             </tr>
             <tr>
                 <td>Contraseña :</td>
-                <td><h:inputText size="20" value="#{usuarioBean.password}" required="true"  /></td>
+                <td><p:password size="20" value="#{usuarioBean.password}" required="true"  /></td>
             </tr>
             <tr>
                 <td>Nombre :</td>
-                <td><h:inputText size="10" value="#{usuarioBean.nombre}" required="true" /></td>
+                <td><p:inputText size="15" value="#{usuarioBean.nombre}" required="true" /></td>
             </tr>
             <tr>
                 <td>Apellido :</td>
-                <td><h:inputText size="20" value="#{usuarioBean.apellido}" required="true" /></td>
+                <td><p:inputText size="20" value="#{usuarioBean.apellido}" required="true" /></td>
             </tr>
             <tr>
                 <td>Fecha de Nacimiento :</td>
-                <td><h:inputText size="8" value="#{usuarioBean.fechaDeNacimento}" required="true" >
+                <td><p:inputText size="8" value="#{usuarioBean.fechaDeNacimento}" required="true" >
                     <f:convertDateTime pattern="dd-MM-yyyy" />
-                </h:inputText>
+                </p:inputText>
                 </td>
+            </tr>
+            <tr>
+                <td>Admin? :</td>
+                <td><p:selectBooleanCheckbox value="#{usuarioBean.admin}" disabled="#{!usuarioBean.menu.usuarioLogueado.admin}" /></td>
             </tr>
         </table>
 
-        <h:commandButton value="Añadir" action="#{usuarioBean.nuevoUsuario}" />
+        <p:commandButton value="Añadir" action="#{usuarioBean.nuevoUsuario()}" update="@all" />
     </h:form>
+    <h:form>
+        <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+        <p:dialog header="Login" widgetVar="dlg" resizable="false">
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel for="username" value="Username:" />
+                <p:inputText id="username" value="#{usuarioBean.username}" required="true" label="username" />
+
+                <h:outputLabel for="password" value="Password:" />
+                <p:password id="password" value="#{usuarioBean.password}" required="true" label="password" />
+
+                <f:facet name="footer">
+                    <p:commandButton value="Login" update="@all" action="#{usuarioBean.login()}"
+                                     oncomplete="handleLoginRequest(xhr, status, args)"  />
+                </f:facet>
+            </h:panelGrid>
+        </p:dialog>
+    </h:form>
+    <script type="text/javascript">
+        function handleLoginRequest(xhr, status, args) {
+            if(args.validationFailed || !args.loggedIn) {
+                PF('dlg').jq.effect("shake", {times:5}, 100);
+            }
+            else {
+                PF('dlg').hide();
+                $('#loginLink').fadeOut();
+            }
+        }
+    </script>
 </h:body>
 </html>

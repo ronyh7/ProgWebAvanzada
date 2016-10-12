@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://java.sun.com/jsf/composite">
 
 <h:head>
     <title>Practica #9</title>
@@ -12,67 +13,34 @@
     <h:form>
         <p:growl id="messages"/>
         <p:menubar>
-            <p:menuitem value="Home" action="crearUsuario"  icon="ui-icon-home"/>
+            <p:menuitem value="Home" action="productosDisponibles"  icon="ui-icon-home"/>
+
+            <p:menuitem value="Crear Usuario" action="crearUsuario" ajax="false" icon="ui-icon-contact"/>
 
             <p:menuitem value="Crear Producto" action="crearProducto" ajax="false" icon="ui-icon-pencil" rendered="#{menuBean.usuarioLogueado.admin}"/>
 
             <p:menuitem value="Historial de Ventas" action="historialVentas" ajax="false" icon="ui-icon-pencil" rendered="#{menuBean.usuarioLogueado.admin}"/>
 
-            <p:menuitem value="#{menuBean.usuarioLogueado.carrito.size()}" action="#" ajax="false" icon="ui-icon-cart" />
+            <p:menuitem value="#{menuBean.usuarioLogueado.carrito.size()}" action="carro" ajax="false" icon="ui-icon-cart" />
 
             <f:facet name="options">
                 <p:commandButton value="Logout" action="#{menuBean.logout()}" icon="ui-icon-extlink" rendered="#{menuBean.userExists()}" update="@all"/>
                 <p:commandButton value="Login" onclick="PF('dlg').show();" onkeydown="PF('dlg').show();" icon="ui-icon-extlink" rendered="#{menuBean.userDoesnExist()}" />
             </f:facet>
         </p:menubar>
-
+        <f:facet name="header">
+            Lista de Productos Comprados
+        </f:facet>
+        <p:dataList value="#{menuBean.usuarios}" var="u" >
+            <p:dataList value="#{u.productosComprados}" var="p" pt:data-inset="true">
+            <h4>Nombre: #{p.nombre}</h4>
+            <p>Cantidad: #{p.cantidad}</p>
+                <br/>Fecha: #{p.fechaCompra}
+            <p class="ui-li-aside"><strong>Usuario: #{u.username}</strong></p>
+            </p:dataList>
+        </p:dataList>
     </h:form>
 
-    <p:dataTable var="u" value="#{usuarioBean.menu.usuarios}" >
-        <p:column>
-            <f:facet name="header">Username: </f:facet>
-            #{u.username}
-        </p:column>
-        <p:column>
-            <f:facet name="header">is Admin? </f:facet>
-            #{u.admin}
-        </p:column>
-    </p:dataTable>
-
-    <h2>Introduzca el contacto</h2>
-    <h:form>
-        <table>
-            <tr>
-                <td>Username :</td>
-                <td><p:inputText size="15" value="#{usuarioBean.username}" required="true" /></td>
-            </tr>
-            <tr>
-                <td>Contraseña :</td>
-                <td><p:password size="20" value="#{usuarioBean.password}" required="true"  /></td>
-            </tr>
-            <tr>
-                <td>Nombre :</td>
-                <td><p:inputText size="15" value="#{usuarioBean.nombre}" required="true" /></td>
-            </tr>
-            <tr>
-                <td>Apellido :</td>
-                <td><p:inputText size="20" value="#{usuarioBean.apellido}" required="true" /></td>
-            </tr>
-            <tr>
-                <td>Fecha de Nacimiento :</td>
-                <td><p:inputText size="8" value="#{usuarioBean.fechaDeNacimento}" required="true" >
-                    <f:convertDateTime pattern="dd-MM-yyyy" />
-                </p:inputText>
-                </td>
-            </tr>
-            <tr>
-                <td>Admin? :</td>
-                <td><p:selectBooleanCheckbox value="#{usuarioBean.admin}" disabled="#{!usuarioBean.menu.usuarioLogueado.admin}" /></td>
-            </tr>
-        </table>
-
-        <p:commandButton value="Añadir" action="#{usuarioBean.nuevoUsuario()}" update="@all" />
-    </h:form>
     <h:form>
         <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
         <p:dialog header="Login" widgetVar="dlg" resizable="false">

@@ -30,7 +30,6 @@
           <element id="library" level="project" name="Maven: org.primefaces.themes:hot-sneaks:1.0.8" />
           <element id="library" level="project" name="Maven: org.primefaces.themes:humanity:1.0.8" />
           <element id="library" level="project" name="Maven: org.primefaces.themes:le-frog:1.0.8" />
-          <element id="library" level="project" name="Maven: org.primefaces.themes:midnight:1.0.8" />
           <element id="library" level="project" name="Maven: org.primefaces.themes:mint-choc:1.0.8" />
           <element id="library" level="project" name="Maven: org.primefaces.themes:overcast:1.0.8" />
           <element id="library" level="project" name="Maven: org.primefaces.themes:pepper-grinder:1.0.8" />
@@ -47,6 +46,8 @@
           <element id="library" level="project" name="Maven: org.primefaces.themes:ui-lightness:1.0.8" />
           <element id="library" level="project" name="Maven: org.primefaces.themes:vader:1.0.8" />
           <element id="library" level="project" name="Maven: org.primefaces.themes:home:1.0.8" />
+          <element id="library" level="project" name="Maven: org.primefaces.themes:midnight:1.0.8" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.5" />
         </element>
       </element>
       <element id="directory" name="META-INF">

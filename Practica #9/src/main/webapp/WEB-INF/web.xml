@@ -5,13 +5,14 @@
 
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>bootstrap</param-value>
+        <param-value>midnight</param-value>
     </context-param>
+
 
     <!-- File(s) appended to a request for a URL that is not mapped to a
         web component -->
     <welcome-file-list>
-        <welcome-file>productosDisponibles.xhtml</welcome-file>
+        <welcome-file>login.xhtml</welcome-file>
     </welcome-file-list>
 
     <!-- Define the JSF servlet (manages the request processing life cycle 

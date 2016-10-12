@@ -1,23 +1,20 @@
 package Beans;
 
-import Domain.Carro;
 import Domain.Usuario;
-import javafx.scene.control.Menu;
-import org.primefaces.push.annotation.Singleton;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
-import java.util.ArrayList;
+import javax.faces.bean.*;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 /**
  * Created by rony- on 9/28/2016.
  */
 
-@SessionScoped
+@ViewScoped
 @ManagedBean(name = "usuarioBean")
 public class UsuarioBean {
     private String username;
@@ -25,7 +22,8 @@ public class UsuarioBean {
     private String nombre;
     private String apellido;
     private Date fechaDeNacimento;
-    private Carro carro = new Carro();
+    private boolean admin=false;
+
     @ManagedProperty(value = "#{menuBean}")
     private MenuBean menu;
 
@@ -34,12 +32,49 @@ public class UsuarioBean {
 
     }
 
-
-
-    public String nuevoUsuario(){
-        Usuario usuario = new Usuario(this.username,this.password,this.nombre,this.apellido,this.fechaDeNacimento);
-        menu.getUsuarios().add(usuario);
+    public String nuevoUsuario() {
+        Usuario usuario = new Usuario(this.username, this.password, this.nombre, this.apellido, this.fechaDeNacimento, this.admin);
+        if (nuevoUsername(usuario)){
+            menu.getUsuarios().add(usuario);
+            menu.addMessage("Usuario Creado");
+            limpiar();
+        }
+        else
+            menu.addError("Este Usuario ya existe");
         return null;
+    }
+
+    public void limpiar(){
+        this.username="";
+        this.password="";
+        this.nombre="";
+        this.apellido="";
+        this.admin=false;
+    }
+
+    public String login(){
+        if(menu.getUsuarioLogueado()==null) {
+            for (int i = 0; i < menu.getUsuarios().size(); i++) {
+                if (menu.getUsuarios().get(i).getUsername().equals(this.username)) {
+                    if (menu.getUsuarios().get(i).getPassword().equalsIgnoreCase(this.password)) {
+                        menu.setUsuarioLogueado(menu.getUsuarios().get(i));
+                        FacesContext facesContext = FacesContext.getCurrentInstance();
+                        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+                        session.setAttribute("usuario",menu.getUsuarios().get(i));
+                        return "productosDisponibles.xhtml";
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    public boolean nuevoUsername(Usuario u){
+        for(int i=0;i< menu.getUsuarios().size();i++){
+            if(u.getUsername().equals(menu.getUsuarios().get(i).getUsername())){
+                return false;
+            }
+        }
+        return true;
     }
     public String getNombre() {
         return nombre;
@@ -55,14 +90,6 @@ public class UsuarioBean {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
-    }
-
-    public Carro getCarro() {
-        return carro;
-    }
-
-    public void setCarro(Carro carro) {
-        this.carro = carro;
     }
 
     public String getUsername() {
@@ -95,5 +122,13 @@ public class UsuarioBean {
 
     public void setMenu(MenuBean menu) {
         this.menu = menu;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }
