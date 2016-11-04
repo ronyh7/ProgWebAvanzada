@@ -22,7 +22,7 @@ public class Usuario implements Serializable{
     private int enabled;
 
     @OneToMany(mappedBy = "usuario")
-    private List<Rol> rol;
+    private List<Rol> roles;
 
     @Transient
     private String rolesTemp;
@@ -37,7 +37,6 @@ public class Usuario implements Serializable{
     }
 
     public Usuario(){
-        this.rol = new ArrayList<>();
         this.setEnabled(1);
     }
 
@@ -92,11 +91,11 @@ public class Usuario implements Serializable{
     }
 
     public List<Rol> getRol() {
-        return rol;
+        return roles;
     }
 
     public void setRol(List<Rol> rol) {
-        this.rol = rol;
+        this.roles = rol;
     }
 
     public int getEnabled() {

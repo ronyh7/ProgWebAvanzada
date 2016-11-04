@@ -13,6 +13,7 @@ import practica10.entidades.Usuario;
 import practica10.servicios.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by rony- on 10/25/2016.
@@ -44,12 +45,23 @@ public class UsuarioController {
 
 
     @RequestMapping("")
-    public String getIndexPage(Model model, HttpServletRequest request) {
+    public String listarUsuarios(Model model, HttpServletRequest request){
+        List<Usuario> usuarios = usuarioServices.usuarios();
+        for (int i=0;i< usuarios.size();i++){
+
+        }
+        model.addAttribute("usuarios",usuarioServices.usuarios());
+
+        return "/usuarios";
+    }
+
+    @RequestMapping("/crearUsuario")
+    public String usuario(Model model, HttpServletRequest request) {
         model.addAttribute("usuario", new Usuario());
         return "/crear_usuario";
     }
 
-    @PostMapping("")
+    @PostMapping("/crearUsuario")
     @Transactional
     public String nuevoUsuario(@ModelAttribute Usuario usuario) {
         String roles[] = usuario.getRolesTemp().split(",");
