@@ -3,9 +3,12 @@ package practica10.servicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import practica10.entidades.Rol;
 import practica10.entidades.Usuario;
+import practica10.repositorios.RolRepository;
 import practica10.repositorios.UsuarioRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +20,9 @@ public class UsuarioServices {
     //Inyectando el repositorio
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private RolRepository rolRepository;
 
     public long cantidadProfesores(){
         return usuarioRepository.count();
@@ -35,8 +41,16 @@ public class UsuarioServices {
 
     @Transactional
     public void admin(){
-        Usuario admin = new Usuario("Rony","Hernandez","N/A", "admin","admin","admin");
-        creacionUsuario(admin);
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        if(usuarios.size()==0) {
+            Usuario admin = new Usuario("Rony", "Hernandez", "N/A", "admin", "admin");
+            creacionUsuario(admin);
+            Rol rol = new Rol();
+            rol.setUsuario(admin);
+            rol.setNombre("ADMIN");
+            rolRepository.save(rol);
+        }
+
     }
 
     public List<Usuario> usuarios(){

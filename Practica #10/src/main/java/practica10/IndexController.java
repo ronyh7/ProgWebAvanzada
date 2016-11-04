@@ -3,10 +3,14 @@ package practica10;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import practica10.servicios.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by rony- on 10/25/2016.
@@ -35,9 +39,14 @@ public class IndexController {
 
 
     @RequestMapping("/")
-    public String getLoginPage(Model model, HttpServletRequest request) {
+    public String getIndexPage(Model model, HttpServletRequest request) {
 
         return "/indice";
     }
+
+
+
+
+
 
 }
