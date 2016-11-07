@@ -1,4 +1,4 @@
-package practica10;
+package practica10.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -27,18 +27,18 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Username</th>
                 <th>Nombre</th>
-                <th>Apellido</th>
+                <th>Descripcion</th>
+                <th>Cantidad</th>
             </tr>
             </thead>
             <tbody>
-            <a href="/usuario/crearUsuario">Nuevo Usuario</a>
-            <#list usuarios as u>
+            <a href="/equipo/crearEquipo">Nuevo Equipo</a>
+            <#list equipos as e>
             <tr>
-                <td>${u.username}</td>
-                <td>${u.nombre}</td>
-                <td>${u.apellido}</td>
+                <td>${e.nombre}</td>
+                <td>${e.descripcion}</td>
+                <td>${e.cantidad}</td>
             </tr>
             </#list>
 

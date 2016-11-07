@@ -17,7 +17,8 @@
             <div>
                 <ul class="nav navbar-nav">
                     <li class="active"> <a href="/">Inicio</a></li>
-                    <li><a href="/usuario">Crear Usuario</a></li>
+                    <li><a href="/usuario">Usuarios</a></li>
+                    <li><a href="/equipo">Equipos</a> </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/login">Login</a></li>

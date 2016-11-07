@@ -13,7 +13,8 @@ import java.util.List;
  */
 public interface FamiliaRepository extends JpaRepository<FamiliaEquipo, Long> {
 
-
+    List<FamiliaEquipo> findAll();
+    FamiliaEquipo findById(int id);
 
     //Ordenando la lista de profesores por fecha.
     //List<Usuario> findAllByOrderByFechaNacimientoDesc();

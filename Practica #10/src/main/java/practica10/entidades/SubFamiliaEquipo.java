@@ -1,10 +1,8 @@
 package practica10.entidades;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by rony- on 10/18/2016.
@@ -18,9 +16,13 @@ public class SubFamiliaEquipo implements Serializable{
     long id;
 
     private String nombre;
+
     @OneToOne
     private
-    FamiliaEquipo familiaEquipo;
+    FamiliaEquipo familia;
+
+    @OneToMany
+    private List<Equipo> equipos;
 
     public long getId() {
         return id;
@@ -38,11 +40,11 @@ public class SubFamiliaEquipo implements Serializable{
         this.nombre = nombre;
     }
 
-    public FamiliaEquipo getFamiliaEquipo() {
-        return familiaEquipo;
+    public FamiliaEquipo getFamilia() {
+        return familia;
     }
 
-    public void setFamiliaEquipo(FamiliaEquipo familiaEquipo) {
-        this.familiaEquipo = familiaEquipo;
+    public void setFamiliaEquipo(FamiliaEquipo familia) {
+        this.familia = familia;
     }
 }

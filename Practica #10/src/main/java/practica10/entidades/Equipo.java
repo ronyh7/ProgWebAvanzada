@@ -18,7 +18,7 @@ public class Equipo implements Serializable {
     private String nombre;
     private String descripcion;
     private int cantidad;
-    @OneToOne
+    @ManyToOne
     private SubFamiliaEquipo familia;
 
     public long getId() {

@@ -1,4 +1,4 @@
-package practica10;
+package practica10.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,7 +58,7 @@ public class UsuarioController {
     @RequestMapping("/crearUsuario")
     public String usuario(Model model, HttpServletRequest request) {
         model.addAttribute("usuario", new Usuario());
-        return "/crear_usuario";
+        return "/crearUsuario";
     }
 
     @PostMapping("/crearUsuario")
@@ -68,24 +68,22 @@ public class UsuarioController {
         usuarioServices.creacionUsuario(usuario);
         System.out.println("LOL");
         for (int i=0; i< roles.length;i++){
+            Rol rol = new Rol();
             if(roles[i].equals("1")){
-                Rol rol = new Rol();
                 rol.setUsuario(usuario);
                 rol.setNombre("ADMIN");
                 rolServices.creacionRol(rol);
             }
             else if(roles[i].equals("2")){
-                Rol rol = new Rol();
                 rol.setUsuario(usuario);
                 rol.setNombre("MANAGER");
                 rolServices.creacionRol(rol);
             }
-            if(roles[i].equals("3")){
-                Rol rol = new Rol();
+            else{
                 rol.setUsuario(usuario);
                 rol.setNombre("CLIENTE");
-                rolServices.creacionRol(rol);
             }
+            rolServices.creacionRol(rol);
         }
         return "redirect:/";
     }

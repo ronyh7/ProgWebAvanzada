@@ -3,6 +3,7 @@ package practica10.repositorios;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import practica10.entidades.FamiliaEquipo;
 import practica10.entidades.SubFamiliaEquipo;
 import practica10.entidades.Usuario;
 
@@ -14,5 +15,8 @@ import java.util.List;
 public interface SubFamiliaRepository extends JpaRepository<SubFamiliaEquipo, Long> {
 
 
+    List<SubFamiliaEquipo> findAll();
 
-}
+    List<SubFamiliaEquipo> findAllByFamilia(FamiliaEquipo id);
+
+    SubFamiliaEquipo findById(int id);}

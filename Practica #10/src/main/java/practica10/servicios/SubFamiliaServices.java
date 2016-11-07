@@ -3,6 +3,7 @@ package practica10.servicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import practica10.entidades.FamiliaEquipo;
 import practica10.entidades.SubFamiliaEquipo;
 import practica10.entidades.Usuario;
 import practica10.repositorios.SubFamiliaRepository;
@@ -41,8 +42,14 @@ public class SubFamiliaServices {
         return subFamiliaRepository.findAll();
     }
 
+    public List<SubFamiliaEquipo> subFamiliasFamilia(FamiliaEquipo id){
+        return subFamiliaRepository.findAllByFamilia(id);
+    }
 
-    //public Usuario usuarioPorUsername(String username) {
-        //return usuarioRepository.consultaUsuario(username);
-    //}
+
+
+    public SubFamiliaEquipo subFamiliaEquipoID(int id) {
+        return subFamiliaRepository.findById(id);
+    }
+
 }

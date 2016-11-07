@@ -12,7 +12,7 @@
         <div class="col-md-3"></div>
         <div class="col-md-5">
             <h1>Inserta un nuevo usuario</h1>
-            <form th:action="@{/usuario/crear_usuario}" th:object="${usuario}" method="POST" >
+            <form th:action="@{/crearUsuario}" th:object="${usuario}" method="POST" >
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <label>Username:</label> <input name="username" type="text" required="true" /><br/>
                 <label>Password:</label> <input name="password" type="password" required="true"/><br/>

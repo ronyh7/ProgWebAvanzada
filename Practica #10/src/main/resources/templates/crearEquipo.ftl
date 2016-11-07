@@ -32,17 +32,22 @@
   </head>
 
   <body>
-
-    <div class="container">
+  <#include "header.ftl">
+  <div class="container">
         <div class="col-md-3"></div>
         <div class="col-md-4">
             <h1>Inserta un Equipo</h1>
-            <form action="/equipo/" method="post" >
+            <form th:action="@{/crearEquipo}" th:object="${equipo}" method="POST" >
                 <label>Titulo:</label> <input name="titulo" type="text"/><br/>
                 <label>Descripcion:</label> <textarea name="descripcion" maxlength="500"></textarea><br/>
                 <label>Cantidad:</label><input name="cantidad" type="number"/><br/>
-                <label>Familia:</label> <input name="familia" type="text"/><br/>
-                <label>Sub-Familia</label><input name="subfamilia" type="text"/>
+                <select class="form-control" id="familiaEquipo">
+                <#list familias as familia>
+                    <option value="${familia.id}"  >${familia.nombre}</option>
+                </#list>
+                </select>
+                <label>SubFamilia:</label>
+                <select name="subFamilia" class="form-control" id="subFamilia">
                 <button name="Insertar" id="insertar" type="submit">Enviar</button>
             </form>
         </div>
@@ -58,7 +63,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../../dist/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/js/subfamilia.js"></script>
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>

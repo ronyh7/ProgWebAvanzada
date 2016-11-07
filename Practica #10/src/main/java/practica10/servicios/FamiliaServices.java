@@ -42,7 +42,7 @@ public class FamiliaServices {
     }
 
 
-    //public Usuario usuarioPorUsername(String username) {
-        //return usuarioRepository.consultaUsuario(username);
-    //}
+    public FamiliaEquipo familiaID(long id) {
+        return familiaRepository.findOne(id);
+    }
 }
