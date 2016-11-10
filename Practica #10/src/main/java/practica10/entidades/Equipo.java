@@ -11,7 +11,7 @@ public class Equipo implements Serializable {
     @Id
     @GeneratedValue
     private
-    long id;
+    int id;
 
 
 
@@ -21,11 +21,11 @@ public class Equipo implements Serializable {
     @ManyToOne
     private SubFamiliaEquipo familia;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

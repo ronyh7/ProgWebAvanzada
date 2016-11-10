@@ -22,6 +22,7 @@ import java.util.Map;
  * Clase que representa un controlador para trabajar con el API REST.
  * Created by vacax on 20/09/16.
  */
+@ResponseBody
 @RestController
 public class RestApiController {
 
@@ -41,10 +42,11 @@ public class RestApiController {
 
 
 
-    @ResponseBody
+
     @RequestMapping(value ="/subfamilias",method = RequestMethod.GET, produces = "application/json")
-    public List cantidadProfesores(@RequestParam("id") int id){
+    public List<SubFamiliaEquipo> cantidadProfesores(@RequestParam("id") int id){
         FamiliaEquipo familia = familiaServices.familiaID(id);
+
 
         return subFamiliaServices.subFamiliasFamilia(familia);
     }

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import practica10.entidades.FamiliaEquipo;
+import practica10.entidades.SubFamiliaEquipo;
 import practica10.servicios.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +42,7 @@ public class IndexController {
 
     @RequestMapping("/")
     public String getIndexPage(Model model, HttpServletRequest request) {
+
 
         return "/indice";
     }

@@ -42,7 +42,7 @@ public class FamiliaServices {
     }
 
 
-    public FamiliaEquipo familiaID(long id) {
-        return familiaRepository.findOne(id);
+    public FamiliaEquipo familiaID(int id) {
+        return familiaRepository.findById(id);
     }
 }

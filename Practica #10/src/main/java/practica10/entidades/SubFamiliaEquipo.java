@@ -13,7 +13,7 @@ public class SubFamiliaEquipo implements Serializable{
     @Id
     @GeneratedValue
     private
-    long id;
+    int id;
 
     private String nombre;
 
@@ -24,11 +24,14 @@ public class SubFamiliaEquipo implements Serializable{
     @OneToMany
     private List<Equipo> equipos;
 
-    public long getId() {
+    @Transient
+    private int fID;
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -46,5 +49,21 @@ public class SubFamiliaEquipo implements Serializable{
 
     public void setFamiliaEquipo(FamiliaEquipo familia) {
         this.familia = familia;
+    }
+
+    public List<Equipo> getEquipos() {
+        return equipos;
+    }
+
+    public void setEquipos(List<Equipo> equipos) {
+        this.equipos = equipos;
+    }
+
+    public int getfID() {
+        return fID;
+    }
+
+    public void setfID(int fID) {
+        this.fID = fID;
     }
 }

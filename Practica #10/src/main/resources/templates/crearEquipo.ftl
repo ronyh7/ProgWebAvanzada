@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,7 +38,9 @@
         <div class="col-md-4">
             <h1>Inserta un Equipo</h1>
             <form th:action="@{/crearEquipo}" th:object="${equipo}" method="POST" >
-                <label>Titulo:</label> <input name="titulo" type="text"/><br/>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+                <label>Nombre:</label> <input name="nombre" type="text"/><br/>
                 <label>Descripcion:</label> <textarea name="descripcion" maxlength="500"></textarea><br/>
                 <label>Cantidad:</label><input name="cantidad" type="number"/><br/>
                 <select class="form-control" id="familiaEquipo">
@@ -47,8 +49,8 @@
                 </#list>
                 </select>
                 <label>SubFamilia:</label>
-                <select name="subFamilia" class="form-control" id="subFamilia">
-                <button name="Insertar" id="insertar" type="submit">Enviar</button>
+                <select name="subFamilia" class="form-control" id="subFamilia"></select>
+                <button name="Insertar" type="submit">Enviar</button>
             </form>
         </div>
     </div>

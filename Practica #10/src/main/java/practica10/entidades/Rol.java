@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class Rol implements Serializable {
     @Id
     @GeneratedValue
-    private long id;
+    private int id;
 
     private String nombre;
 
@@ -35,11 +35,11 @@ public class Rol implements Serializable {
         this.nombre = nombre;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

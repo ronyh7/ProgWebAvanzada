@@ -31,7 +31,7 @@ public class SubFamiliaServices {
      * @return
      */
     @Transactional
-    public SubFamiliaEquipo creacionUsuario(SubFamiliaEquipo subFamilia){
+    public SubFamiliaEquipo creacionSubFamilia(SubFamiliaEquipo subFamilia){
         subFamiliaRepository.save(subFamilia);
         return subFamilia;
     }

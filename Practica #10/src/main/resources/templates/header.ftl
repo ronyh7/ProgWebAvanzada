@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,6 +19,7 @@
                     <li class="active"> <a href="/">Inicio</a></li>
                     <li><a href="/usuario">Usuarios</a></li>
                     <li><a href="/equipo">Equipos</a> </li>
+                    <li><a href="/familia">Familias</a> </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/login">Login</a></li>
