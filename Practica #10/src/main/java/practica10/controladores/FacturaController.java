@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import practica10.entidades.*;
+import practica10.entidades.Equipo;
+import practica10.entidades.SubFamiliaEquipo;
 import practica10.servicios.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +19,8 @@ import java.util.List;
  * Created by rony- on 10/25/2016.
  */
 @Controller
-@RequestMapping("/equipo")
-public class EquipoController {
+@RequestMapping("/factura")
+public class FacturaController {
 
     @Autowired
     AlquilerServices alquilerServices;
@@ -51,11 +52,9 @@ public class EquipoController {
     }
 
     @RequestMapping("/crearEquipo")
-    public String equipo(@RequestParam("fid") int id, Model model, HttpServletRequest request) {
-        FamiliaEquipo fa = familiaServices.familiaID(id);
-
+    public String equipo(Model model, HttpServletRequest request) {
         model.addAttribute("equipo", new Equipo());
-        model.addAttribute("familias", subFamiliaServices.subFamiliasFamilia(fa));
+        model.addAttribute("familias", familiaServices.familiaEquipos());
         return "/crearEquipo";
     }
 

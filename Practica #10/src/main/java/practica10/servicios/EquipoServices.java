@@ -41,4 +41,9 @@ public class EquipoServices {
         return equipoRepository.findAll();
     }
 
+    public Equipo equipoByID(int id){
+        return equipoRepository.findById(id);
+    }
+
+
 }

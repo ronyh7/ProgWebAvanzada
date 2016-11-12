@@ -18,6 +18,7 @@ public class Equipo implements Serializable {
     private String nombre;
     private String descripcion;
     private int cantidad;
+    private int cobroDia;
     @ManyToOne
     private SubFamiliaEquipo familia;
 
@@ -59,5 +60,13 @@ public class Equipo implements Serializable {
 
     public void setFamilia(SubFamiliaEquipo familia) {
         this.familia = familia;
+    }
+
+    public int getCobroDia() {
+        return cobroDia;
+    }
+
+    public void setCobroDia(int cobroDia) {
+        this.cobroDia = cobroDia;
     }
 }

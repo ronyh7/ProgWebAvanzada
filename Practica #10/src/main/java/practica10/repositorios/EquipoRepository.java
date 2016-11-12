@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface EquipoRepository extends JpaRepository<Equipo, Long> {
 
-
+    Equipo findById(int id);
 
     //Documentación de algunas formas de hacer las consultas.
     //http://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation

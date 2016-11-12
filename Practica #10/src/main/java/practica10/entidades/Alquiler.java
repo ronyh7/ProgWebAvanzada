@@ -18,6 +18,10 @@ public class Alquiler implements Serializable{
     private Equipo equipo;
     private Date fechaAlquiler;
 
+
+    private boolean devuelto;
+
+
     @ManyToOne
     private Factura factura;
 
@@ -51,5 +55,13 @@ public class Alquiler implements Serializable{
 
     public void setFactura(Factura factura) {
         this.factura = factura;
+    }
+
+    public boolean isDevuelto() {
+        return devuelto;
+    }
+
+    public void setDevuelto(boolean devuelto) {
+        this.devuelto = devuelto;
     }
 }

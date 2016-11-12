@@ -21,6 +21,8 @@ public class Factura implements Serializable {
     @OneToOne
     private Usuario cliente;
 
+    private boolean checkedOut;
+
     public int getId() {
         return id;
     }
@@ -45,5 +47,13 @@ public class Factura implements Serializable {
 
     public void setEquiposAlquilados(List<Alquiler> equiposAlquilados) {
         this.equiposAlquilados = equiposAlquilados;
+    }
+
+    public boolean isCheckedOut() {
+        return checkedOut;
+    }
+
+    public void setCheckedOut(boolean checkedOut) {
+        this.checkedOut = checkedOut;
     }
 }

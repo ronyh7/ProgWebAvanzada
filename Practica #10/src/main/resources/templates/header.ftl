@@ -16,13 +16,13 @@
             </div>
             <div>
                 <ul class="nav navbar-nav">
-                    <li class="active"> <a href="/">Inicio</a></li>
+                    <li class="active"> <a href="/alquiler">Inicio</a></li>
                     <li><a href="/usuario">Usuarios</a></li>
                     <li><a href="/equipo">Equipos</a> </li>
                     <li><a href="/familia">Familias</a> </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/login">Login</a></li>
+                    <li><a href="/">Login</a></li>
                 </ul>
             </div>
         </div>

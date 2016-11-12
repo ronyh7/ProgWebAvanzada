@@ -30,7 +30,7 @@ public class FacturaServices {
      * @return
      */
     @Transactional
-    public Factura creacionUsuario(Factura factura){
+    public Factura creacionFactura(Factura factura){
         facturaRepository.save(factura);
         return factura;
     }
@@ -38,6 +38,10 @@ public class FacturaServices {
     public List<Factura> facturas(){
 
         return facturaRepository.findAll();
+    }
+
+    public List<Factura> facturaUsuario(Usuario usuario){
+        return facturaRepository.findByCliente(usuario);
     }
 
 

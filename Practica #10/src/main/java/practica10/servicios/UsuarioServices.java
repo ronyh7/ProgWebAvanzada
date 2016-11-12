@@ -53,6 +53,10 @@ public class UsuarioServices {
 
     }
 
+    public Usuario userPass(String username){
+        return usuarioRepository.findByUsername(username);
+    }
+
     public List<Usuario> usuarios(){
 
         return usuarioRepository.findAll();

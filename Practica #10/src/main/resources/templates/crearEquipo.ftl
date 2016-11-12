@@ -43,13 +43,12 @@
                 <label>Nombre:</label> <input name="nombre" type="text"/><br/>
                 <label>Descripcion:</label> <textarea name="descripcion" maxlength="500"></textarea><br/>
                 <label>Cantidad:</label><input name="cantidad" type="number"/><br/>
-                <select class="form-control" id="familiaEquipo">
-                <#list familias as familia>
-                    <option value="${familia.id}"  >${familia.nombre}</option>
+                <label>SubFamilia:</label>
+                <select class="form-control" id="subFamiliaEquipo" name="subFamilia">
+                <#list familias as s>
+                    <option value="${s.id}">${s.nombre}</option>
                 </#list>
                 </select>
-                <label>SubFamilia:</label>
-                <select name="subFamilia" class="form-control" id="subFamilia"></select>
                 <button name="Insertar" type="submit">Enviar</button>
             </form>
         </div>

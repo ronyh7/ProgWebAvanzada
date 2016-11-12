@@ -41,7 +41,7 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll()
                 .and()
                 .formLogin()
-                    .loginPage("/login") //indicando la ruta que estaremos utilizando.
+                    .loginPage("/") //indicando la ruta que estaremos utilizando.
                     .failureUrl("/login?error")
                     .permitAll()
                 .and()
