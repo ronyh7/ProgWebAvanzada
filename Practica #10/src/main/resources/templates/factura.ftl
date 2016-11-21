@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Articulo</title>
+    <title><@spring.message "factura"/></title>
 
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -33,27 +33,35 @@
 
   <body>
   <#include "header.ftl">
-  <div class="container">
-        <div class="col-md-3"></div>
-        <div class="col-md-4">
-            <h1><@spring.message "insertar_equipo"/></h1>
-            <form th:action="@{/crearEquipo}" th:object="${equipo}" method="POST">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+  <div class="col-md-4 col-md-offset-4">
+      <h1><@spring.message "factura"/></h1>
 
-                <label><@spring.message "nombre"/>:</label> <input name="nombre" type="text"/><br/>
-                <label><@spring.message "descripcion"/>:</label> <textarea name="descripcion" maxlength="500"></textarea><br/>
-                <label><@spring.message "cantidad"/>:</label><input name="cantidad" type="number"/><br/>
-                <label><@spring.message "costo"/>:</label><input name="cobroDia" type="number"/><br/>
-                <label><@spring.message "sub_familia"/>:</label>
-                <select class="form-control" id="subFamiliaEquipo" name="subFamilia">
-                <#list familias as s>
-                    <option value="${s.id}">${s.nombre}</option>
-                </#list>
-                </select>
-                <button name="Insertar" type="submit"><@spring.message "insertar_equipo"/></button>
-            </form>
-        </div>
-    </div>
+      <table class="table table-bordered">
+          <thead>
+          <tr>
+              <th>ID</th>
+              <th><@spring.message "equipos"/>:</th>
+          </tr>
+          </thead>
+          <tbody>
+          <#if alquiler?has_content>
+              <#list alquiler as a>
+              <tr>
+                  <td>${factura.id}</td>
+                  <td>${a.equipo.nombre}</td>
+              </tr>
+
+              </#list>
+          </#if>
+          </tbody>
+      </table>
+      <form action="/factura/facturar/" method="POST">
+          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+          <input type="hidden" name="id" value="${factura.id}" />
+          <label>Total:${factura.total}</label>
+          <button><@spring.message "rentar"/></button>
+      </form>
+  </div>
             <!-- /.blog-main -->
 
 
@@ -65,7 +73,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../../dist/js/bootstrap.min.js"></script>
-
+    <script src="/js/subfamilia.js"></script>
 
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>

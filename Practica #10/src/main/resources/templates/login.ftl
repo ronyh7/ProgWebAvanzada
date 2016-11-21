@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Sign in</title>
+    <title><@spring.message "iniciar_sesion"/></title>
 
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -22,15 +22,14 @@
 
     <div class="container">
       <form class="form-signin" role="form" action="/login" method="post">
-        <h2 class="form-signin-heading">The Blog</h2>
           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <label for="inputEmail" class="sr-only">Nombre de usuario</label>
+        <label for="inputEmail" class="sr-only"><@spring.message "nombre_usuario"/></label>
         <input type="text" name ="username" id="username" class="form-control" placeholder="Username" required autofocus>
-        <label for="inputPassword" class="sr-only">Contraseña</label>
+        <label for="inputPassword" class="sr-only"><@spring.message "contrasena"/></label>
         <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesion</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit"><@spring.message "iniciar_sesion"/></button>
           <hr>
-          <h4><a href="/">No tiene cuenta? puede continuar como invitado </a> </h4>
+          <h4><a href="/crearCliente"><@spring.message "registrar_cliente"/></a> </h4>
       </form>
 
     </div> <!-- /container -->

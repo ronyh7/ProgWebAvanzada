@@ -44,6 +44,10 @@ public class FacturaServices {
         return facturaRepository.findByCliente(usuario);
     }
 
+    public Factura facturaID(int id){
+        return facturaRepository.findById(id);
+    }
+
 
     //public Usuario usuarioPorUsername(String username) {
         //return usuarioRepository.consultaUsuario(username);

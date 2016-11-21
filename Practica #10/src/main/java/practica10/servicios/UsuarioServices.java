@@ -43,17 +43,22 @@ public class UsuarioServices {
     public void admin(){
         List<Usuario> usuarios = usuarioRepository.findAll();
         if(usuarios.size()==0) {
-            Usuario admin = new Usuario("Rony", "Hernandez", "N/A", "admin", "admin");
+            Usuario admin = new Usuario();
+            admin.setUsername("admin");
+            admin.setApellido("Hernandez");
+            admin.setNombre("Rony");
+            admin.setPassword("admin");
+            admin.setCedula("823568953");
             creacionUsuario(admin);
             Rol rol = new Rol();
             rol.setUsuario(admin);
-            rol.setNombre("ADMIN");
+            rol.setRol("ROLE_ADMIN");
             rolRepository.save(rol);
         }
 
     }
 
-    public Usuario userPass(String username){
+    public Usuario user(String username){
         return usuarioRepository.findByUsername(username);
     }
 

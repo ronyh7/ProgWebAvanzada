@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>BLOG</title>
 
@@ -12,19 +13,25 @@
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a href="#" class="navbar-brand">BLOG Here!</a>
+                <a href="#" class="navbar-brand"><@spring.message "bienvenido"/>!</a>
             </div>
             <div>
                 <ul class="nav navbar-nav">
-                    <li class="active"> <a href="/alquiler">Inicio</a></li>
-                    <li><a href="/usuario">Usuarios</a></li>
-                    <li><a href="/equipo">Equipos</a> </li>
-                    <li><a href="/familia">Familias</a> </li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/usuario/"><@spring.message "usuarios"/></a></li>
+                    <li><a href="/familia/"><@spring.message "familias"/></a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/">Login</a></li>
+                    <li><a href="/factual/?id=0"><@spring.message "facturaAC"/></a></li>
+                    <li><a href="/factura/facturas"><@spring.message "facturas"/></a></li>
+                    <#if usuario.username == " ">
+                        <li><a href="/login">Login</a></li>
+                    <#else>
+                        <li><a href="/logout"><@spring.message "cerrar_sesion"/></a></li>
+                    </#if>
                 </ul>
             </div>
         </div>
     </nav>
+
 </body>

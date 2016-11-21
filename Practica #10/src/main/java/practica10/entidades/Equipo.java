@@ -13,8 +13,6 @@ public class Equipo implements Serializable {
     private
     int id;
 
-
-
     private String nombre;
     private String descripcion;
     private int cantidad;

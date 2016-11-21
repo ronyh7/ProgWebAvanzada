@@ -15,6 +15,8 @@ public interface AlquilerRepository extends JpaRepository<Alquiler, Long> {
 
     @Override
     Alquiler findOne(Long aLong);
+
+
     //Documentación de algunas formas de hacer las consultas.
     //http://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
 
@@ -23,7 +25,7 @@ public interface AlquilerRepository extends JpaRepository<Alquiler, Long> {
 
     //Trabajando con los querys de HQL.
     @Query("select a from Alquiler a where a.id = :id")
-    Alquiler consultaAlquiler(@Param("id") String id);
+    Alquiler consultaAlquiler(@Param("id") int id);
 
 
 }

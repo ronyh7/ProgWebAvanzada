@@ -11,24 +11,15 @@
     <div class="container">
         <div class="col-md-3"></div>
         <div class="col-md-5">
-            <h1><@spring.message "registrar_usuario"/></h1>
-            <form id="upload-file-form" th:action="@{/crearUsuario}" enctype='multipart/form-data' th:object="${usuario}" method="POST" >
+            <h1><@spring.message "nuevo_cliente"/></h1>
+            <form th:action="@{/crearCliente}" th:object="${usuario}" method="POST" >
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <label><@spring.message "nombre_usuario"/>:</label> <input name="username" type="text" required="true" /><br/>
                 <label><@spring.message "contrasena"/>:</label> <input name="password" type="password" required="true"/><br/>
                 <label><@spring.message "nombre"/>:</label> <input name="nombre"  type="text" required="true"/><br/>
                 <label><@spring.message "apellido"/>:</label> <input name="apellido"  type="text" required="true"/><br/>
                 <label><@spring.message "cedula"/>:</label> <input name="cedula" type="text" required="true"/><br/>
-                <label><@spring.message "rol"/>:</label>
-                <select id="roles" class="form-control" name="roles" multiple="multiple" >
-                    <option value="ROLE_ADMIN">Administrador</option>
-                    <option value="ROLE_MANAGER">Manager</option>
-                    <option value="ROLE_CLIENTE">Cliente</option>
-                </select>
-
-                <label for="upload-file-input"><@spring.message "foto" />:</label>
-                <input id="upload-file-input" type="file" name="uploadfile" accept="*"/>
-                <button name="usuario" id="usuario" type="submit"><@spring.message "registrar_usuario"/></button>
+                <button name="usuario" id="usuario" type="submit"><@spring.message "nuevo_cliente"/></button>
             </form>
         </div>
     </div>

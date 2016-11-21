@@ -21,7 +21,7 @@ public class SubFamiliaEquipo implements Serializable{
     private
     FamiliaEquipo familia;
 
-    @OneToMany
+    @OneToMany(mappedBy = "familia")
     private List<Equipo> equipos;
 
     @Transient

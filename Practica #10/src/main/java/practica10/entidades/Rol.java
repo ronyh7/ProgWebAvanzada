@@ -15,7 +15,7 @@ public class Rol implements Serializable {
     @GeneratedValue
     private int id;
 
-    private String nombre;
+    private String rol;
 
     @ManyToOne
     private Usuario usuario;
@@ -23,16 +23,16 @@ public class Rol implements Serializable {
     public Rol(){}
 
 
-    public Rol(String nombre){
-        this.nombre=nombre;
+    public Rol(String rol){
+        this.rol=rol;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getRol() {
+        return rol;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
     public int getId() {

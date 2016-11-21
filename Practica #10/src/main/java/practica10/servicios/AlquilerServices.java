@@ -40,6 +40,10 @@ public class AlquilerServices {
         return alquilerRepository.findAll();
     }
 
+    public Alquiler alquilerID(int id){
+        return alquilerRepository.consultaAlquiler(id);
+    }
+
     /**
      *
      * @param nombre

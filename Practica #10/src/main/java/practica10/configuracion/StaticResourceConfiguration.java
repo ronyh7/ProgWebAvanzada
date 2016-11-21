@@ -11,8 +11,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class StaticResourceConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-          String directory ="file:///C:/practica/clientes/";
+        String directory="=/home/rony/alquiler";
          registry.addResourceHandler("/archivos/**").addResourceLocations(directory);
+        System.out.println("DIRE: "+directory);
          String workingDir = System.getProperty("user.dir");
     }
 }

@@ -1,18 +1,19 @@
 package practica10.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import practica10.entidades.Rol;
 import practica10.entidades.Usuario;
 import practica10.servicios.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.*;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -44,12 +45,15 @@ public class UsuarioController {
     RolServices rolServices;
 
 
-    @RequestMapping("")
+    @RequestMapping("/")
     public String listarUsuarios(Model model, HttpServletRequest request){
         List<Usuario> usuarios = usuarioServices.usuarios();
-        for (int i=0;i< usuarios.size();i++){
-
-        }
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario u = new Usuario();
+        u.setUsername(user);
+        if(user.equals("anonymousUser"))
+            u.setUsername(" ");
+        model.addAttribute("usuario",u);
         model.addAttribute("usuarios",usuarioServices.usuarios());
 
         return "/usuarios";
@@ -63,26 +67,24 @@ public class UsuarioController {
 
     @PostMapping("/crearUsuario")
     @Transactional
-    public String nuevoUsuario(@ModelAttribute Usuario usuario) {
-        String roles[] = usuario.getRolesTemp().split(",");
+    public String nuevoUsuario(@ModelAttribute Usuario usuario, @RequestParam("roles") String[] roles, @RequestParam("uploadfile") MultipartFile uploadfile) {
+        String filename = usuario.getCedula() + "_" + uploadfile.getOriginalFilename();
+        String directory="/home/rony/alquiler";
+        try {
+            String filepath = Paths.get(directory, filename).toString();
+            BufferedOutputStream stream = null;
+            stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
+            stream.write(uploadfile.getBytes());
+            stream.close();
+        }catch (Exception e){
+
+        }
+        usuario.setImagen(filename);
         usuarioServices.creacionUsuario(usuario);
-        System.out.println("LOL");
         for (int i=0; i< roles.length;i++){
             Rol rol = new Rol();
-            if(roles[i].equals("1")){
-                rol.setUsuario(usuario);
-                rol.setNombre("ADMIN");
-                rolServices.creacionRol(rol);
-            }
-            else if(roles[i].equals("2")){
-                rol.setUsuario(usuario);
-                rol.setNombre("MANAGER");
-                rolServices.creacionRol(rol);
-            }
-            else{
-                rol.setUsuario(usuario);
-                rol.setNombre("CLIENTE");
-            }
+            rol.setUsuario(usuario);
+            rol.setRol(roles[i]);
             rolServices.creacionRol(rol);
         }
         return "redirect:/";

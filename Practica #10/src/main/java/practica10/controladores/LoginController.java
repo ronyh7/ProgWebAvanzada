@@ -22,7 +22,7 @@ import java.util.Optional;
 
 
 @Controller()
-@RequestMapping("/")
+@RequestMapping("/login")
 public class LoginController {
 
     @Autowired
@@ -38,17 +38,6 @@ public class LoginController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView getLoginPage(@RequestParam Optional<String> error) {
         return new ModelAndView("login", "error", error);
-    }
-
-    @PostMapping("/login")
-    public String postLogin(@RequestParam("username") String username, Model model, HttpServletRequest request){
-        Usuario usuario = usuarioServices.userPass(username);
-        request.getSession(true).setAttribute("usuario",usuario);
-        List<Equipo> equipos = equipoServices.equipos();
-
-        model.addAttribute("equipos",equipos);
-
-        return "/indice";
     }
 
 

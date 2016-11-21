@@ -8,22 +8,21 @@
 
 <body>
     <#include "header.ftl">
-    <h1>Familias</h1>
+    <h1><@spring.message "familias"/></h1>
+    <div class="container">
 
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <h1>Crea una nueva familia</h1>
+        <h1><@spring.message "nueva_familia"/></h1>
         <form action="/familia/crearFamilia" th:object="${familia}" method="POST" >
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <label>Familia:</label> <input name="nombre" type="text"></>
-        <button name="Insertar" id="insertar" type="submit">Enviar</button>
+            <label><@spring.message "familia"/>:</label> <input name="nombre" type="text"></>
+        <button name="Insertar" id="insertar" type="submit"><@spring.message "nueva_familia"/></button>
         </form>
     </div>
     <table class="table table-bordered">
         <thead>
         <tr>
             <th>ID</th>
-            <th>Familia</th>
+            <th><@spring.message "familia"/></th>
         </tr>
         </thead>
         <tbody>

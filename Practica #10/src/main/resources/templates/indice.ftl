@@ -13,6 +13,7 @@
 
 <body class="w3-light-grey">
 <#include "header.ftl">
+IMAGEN: ${usuario.imagen}
 
 
 <!-- w3-content defines a container for fixed size centered content,
@@ -21,7 +22,7 @@ and is wrapped around the whole page content, except for the footer in this exam
 
     <!-- Header -->
     <header class="w3-container w3-center w3-padding-32">
-        <h1><b>Equipos</b></h1>
+        <h1><b><@spring.message "equipos"/></b></h1>
     </header>
 
     <!-- Grid -->
@@ -35,15 +36,18 @@ and is wrapped around the whole page content, except for the footer in this exam
                     <div class="w3-card-4 w3-margin w3-white">
                         <div class="w3-container w3-padding-8">
                             <h3><b>${e.nombre}</b></h3>
-                            <h4>Descripcion:</h4>
+
                         </div>
 
                         <div class="w3-container">
                             <p>${e.descripcion}</p>
                             <div class="w3-row">
-                                <form action="/alquiler/agregar?equipo=${e.id}" method="post">
-                                <div class="w3-col m8 s12">
-                                    <p><button class="w3-btn w3-padding-large w3-white w3-border w3-hover-border-black"><b>Rentar</b></button></p>
+                                <h4><@spring.message "cantidad"/> ${e.cantidad}</h4>
+                                <form action="/alquiler?equipo=${e.id}" method="post">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <div class="w3-col m8 s12">
+                                        <h5><@spring.message "costo"/>:<b>${e.cobroDia}</b></h5>
+                                    <p><button class="w3-btn w3-padding-large w3-white w3-border w3-hover-border-black"><b><@spring.message "rentar"/></b></button></p>
                                 </div>
                                 </form>
                             </div>
@@ -57,10 +61,11 @@ and is wrapped around the whole page content, except for the footer in this exam
         <div class="w3-col l4">
             <!-- About Card -->
             <div class="w3-card-2 w3-margin w3-margin-top">
-                <img src="/w3images/avatar_g.jpg" style="width:100%">
+                    <img src="/archivos/${usuario.imagen}" style="width:100%">
+
+
                 <div class="w3-container w3-white">
-                    <h4><b>My Name</b></h4>
-                    <p>Just me, myself and I, exploring the universe of uknownment. I have a heart of love and a interest of lorem ipsum and mauris neque quam blog. I want to share my world with you.</p>
+                    <h4><@spring.message "nombre_usuario"/>: <b>${usuario.username}</b></h4>
                 </div>
             </div><hr>
 

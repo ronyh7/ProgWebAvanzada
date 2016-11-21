@@ -27,13 +27,13 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Descripcion</th>
-                <th>Cantidad</th>
+                <th><@spring.message "nombre"/></th>
+                <th><@spring.message "descripcion"/></th>
+                <th><@spring.message "cantidad"/></th>
             </tr>
             </thead>
             <tbody>
-            <a href="/equipo/crearEquipo">Nuevo Equipo</a>
+            <a href="/equipo/crearEquipo"><@spring.message "nuevo_equipo"/></a>
             <#list equipos as e>
             <tr>
                 <td>${e.nombre}</td>

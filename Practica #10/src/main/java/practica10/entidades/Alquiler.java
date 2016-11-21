@@ -16,8 +16,8 @@ public class Alquiler implements Serializable{
     private int id;
     @OneToOne
     private Equipo equipo;
-    private Date fechaAlquiler;
 
+    private int diasAlquilado;
 
     private boolean devuelto;
 
@@ -41,14 +41,6 @@ public class Alquiler implements Serializable{
         this.equipo = equipo;
     }
 
-    public Date getFechaAlquiler() {
-        return fechaAlquiler;
-    }
-
-    public void setFechaAlquiler(Date fechaAlquiler) {
-        this.fechaAlquiler = fechaAlquiler;
-    }
-
     public Factura getFactura() {
         return factura;
     }
@@ -63,5 +55,13 @@ public class Alquiler implements Serializable{
 
     public void setDevuelto(boolean devuelto) {
         this.devuelto = devuelto;
+    }
+
+    public int getDiasAlquilado() {
+        return diasAlquilado;
+    }
+
+    public void setDiasAlquilado(int diasAlquilado) {
+        this.diasAlquilado = diasAlquilado;
     }
 }

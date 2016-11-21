@@ -5,8 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>BLOG</title>
-
     <!-- Bootstrap -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
       <link href="/static/css/blog.css" rel="stylesheet">
@@ -27,13 +25,13 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Username</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
+                <th><@spring.message "nombre_usuario"/></th>
+                <th><@spring.message "nombre"/></th>
+                <th><@spring.message "apellido"/></th>
             </tr>
             </thead>
             <tbody>
-            <a href="/usuario/crearUsuario">Nuevo Usuario</a>
+            <a href="/usuario/crearUsuario"><@spring.message "nuevo_usuario"/></a>
             <#list usuarios as u>
             <tr>
                 <td>${u.username}</td>

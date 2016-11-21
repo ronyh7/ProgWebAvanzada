@@ -15,13 +15,17 @@ public interface FacturaRepository extends JpaRepository<Factura, Long> {
     @Override
     Factura findOne(Long aLong);
 
+    Factura findById(int id);
 
     @Override
     List<Factura> findAll();
 
-    @Query("select u from Factura u where u.cliente = :cliente and u.checkedOut='true'")
+    @Query("select u from Factura u where u.cliente = :cliente")
     List<Factura> findByCliente(@Param("cliente") Usuario cliente);
 
+
+
+    //@Query("select u from Factura u where u.cliente = :cliente and u.checkedOut='true'")
     //Documentación de algunas formas de hacer las consultas.
     //http://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
 

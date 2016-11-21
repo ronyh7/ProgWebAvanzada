@@ -1,6 +1,7 @@
 package practica10.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -43,9 +44,15 @@ public class EquipoController {
     RolServices rolServices;
 
 
-    @RequestMapping("")
+    @RequestMapping("/")
     public String listarUsuarios(Model model, HttpServletRequest request){
         List<Equipo> equipos = equipoServices.equipos();
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario u = new Usuario();
+        u.setUsername(user);
+        if(user.equals("anonymousUser"))
+            u.setUsername(" ");
+        model.addAttribute("usuario",u);
         model.addAttribute("equipos",equipos);
         return "/equipos";
     }
@@ -53,7 +60,12 @@ public class EquipoController {
     @RequestMapping("/crearEquipo")
     public String equipo(@RequestParam("fid") int id, Model model, HttpServletRequest request) {
         FamiliaEquipo fa = familiaServices.familiaID(id);
-
+        String user =SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario u = new Usuario();
+        u.setUsername(user);
+        if(user.equals("anonymousUser"))
+            u.setUsername(" ");
+        model.addAttribute("usuario",u);
         model.addAttribute("equipo", new Equipo());
         model.addAttribute("familias", subFamiliaServices.subFamiliasFamilia(fa));
         return "/crearEquipo";

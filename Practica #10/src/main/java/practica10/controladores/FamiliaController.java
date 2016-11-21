@@ -1,6 +1,7 @@
 package practica10.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import practica10.entidades.Equipo;
 import practica10.entidades.FamiliaEquipo;
 import practica10.entidades.SubFamiliaEquipo;
+import practica10.entidades.Usuario;
 import practica10.servicios.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,9 +47,15 @@ public class FamiliaController {
     RolServices rolServices;
 
 
-    @RequestMapping("")
+    @RequestMapping("/")
     public String listarFamilias(Model model, HttpServletRequest request){
         List<FamiliaEquipo> familias = familiaServices.familiaEquipos();
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario u = new Usuario();
+        u.setUsername(user);
+        if(user.equals("anonymousUser"))
+            u.setUsername(" ");
+        model.addAttribute("usuario",u);
         model.addAttribute("familia", new FamiliaEquipo());
         model.addAttribute("familias",familias);
 
@@ -59,10 +67,15 @@ public class FamiliaController {
         FamiliaEquipo fa = familiaServices.familiaID(id);
 
         List<SubFamiliaEquipo> familias = subFamiliaServices.subFamiliasFamilia(fa);
+        String user =SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario u = new Usuario();
+        u.setUsername(user);
+        if(user.equals("anonymousUser"))
+            u.setUsername(" ");
+        model.addAttribute("usuario",u);
         model.addAttribute("familia", fa);
         model.addAttribute("subFamilia", new SubFamiliaEquipo());
         model.addAttribute("subFamilias",familias);
-        System.out.println("HELL");
         return "/subFamilias";
     }
 
@@ -75,6 +88,12 @@ public class FamiliaController {
         System.out.println("HELL");
 
         List<SubFamiliaEquipo> familias = subFamiliaServices.subFamiliasFamilia(fa);
+        String user =SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario u = new Usuario();
+        u.setUsername(user);
+        if(user.equals("anonymousUser"))
+            u.setUsername(" ");
+        model.addAttribute("usuario",u);
         model.addAttribute("familia", fa);
         model.addAttribute("subFamilia", new SubFamiliaEquipo());
         model.addAttribute("subFamilias",familias);
@@ -90,6 +109,12 @@ public class FamiliaController {
         System.out.println("Nombre: "+familiaEquipo.getNombre());
         familiaServices.creacionFamilia(familiaEquipo);
         List<FamiliaEquipo> familias = familiaServices.familiaEquipos();
+        String user =SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario u = new Usuario();
+        u.setUsername(user);
+        if(user.equals("anonymousUser"))
+            u.setUsername(" ");
+        model.addAttribute("usuario",u);
         model.addAttribute("familia", new FamiliaEquipo());
         model.addAttribute("familias",familias);
         return "familias";

@@ -16,10 +16,10 @@ public class Usuario implements Serializable{
     private String nombre;
     private String apellido;
     private String cedula;
-
     private String password;
-
+    @Column(name = "enabled", nullable = false, columnDefinition = "int default 1")
     private int enabled;
+    private String imagen;
 
     @OneToMany(mappedBy = "usuario")
     private List<Rol> roles;
@@ -27,16 +27,10 @@ public class Usuario implements Serializable{
     @Transient
     private String rolesTemp;
 
-    public Usuario(String nombre, String apellido, String cedula, String username, String password){
-        this.nombre=nombre;
-        this.apellido=apellido;
-        this.cedula=cedula;
-        this.username=username;
-        this.password=password;
-        this.setEnabled(1);
-    }
 
     public Usuario(){
+        this.username=" ";
+        this.imagen=" ";
         this.setEnabled(1);
     }
 
@@ -112,5 +106,13 @@ public class Usuario implements Serializable{
 
     public void setRolesTemp(String rolesTemp) {
         this.rolesTemp = rolesTemp;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }
