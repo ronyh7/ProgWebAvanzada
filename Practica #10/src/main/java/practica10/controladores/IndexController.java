@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/")
-public class AlquilerController {
+public class IndexController {
 
     @Autowired
     AlquilerServices alquilerServices;
