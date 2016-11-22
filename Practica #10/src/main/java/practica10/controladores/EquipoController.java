@@ -9,10 +9,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import practica10.entidades.*;
 import practica10.servicios.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -73,11 +78,23 @@ public class EquipoController {
 
     @PostMapping("/crearEquipo")
     @Transactional
-    public String nuevoEquipo(@ModelAttribute Equipo equipo, @RequestParam("subFamilia") int idF) {
+    public String nuevoEquipo(@ModelAttribute Equipo equipo, @RequestParam("subFamilia") int idF,@RequestParam("uploadfile") MultipartFile uploadfile) {
         SubFamiliaEquipo subFamiliaEquipo = subFamiliaServices.subFamiliaEquipoID(idF);
         equipo.setFamilia(subFamiliaEquipo);
+
+        String filename = equipo.getId() + "_" + uploadfile.getOriginalFilename();
+        String directory="C:/clientes/";
+        try {
+            String filepath = Paths.get(directory, filename).toString();
+            BufferedOutputStream stream = null;
+            stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
+            stream.write(uploadfile.getBytes());
+            stream.close();
+        }catch (Exception e){
+
+        }
+        equipo.setImagen(filename);
         equipoServices.creacionEquipo(equipo);
-        System.out.println("LOL");
         return "redirect:/";
     }
 

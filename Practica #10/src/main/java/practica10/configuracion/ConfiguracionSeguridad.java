@@ -44,6 +44,7 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
                 .antMatchers("/familia/**").hasAnyRole("ADMIN","MANAGER")
                 .antMatchers("/factual/").hasAnyRole("ADMIN","MANAGER","CLIENTE")
                 .antMatchers("/factura/facturar/").hasAnyRole("ADMIN","MANAGER","CLIENTE")
+                .antMatchers("/factura/eliminar/").hasAnyRole("ADMIN","MANAGER","CLIENTE")
                 .antMatchers("/factura/**").hasAnyRole("ADMIN","MANAGER")
                 .antMatchers("/alquiler/**").authenticated()
 

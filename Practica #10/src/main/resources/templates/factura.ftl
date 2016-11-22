@@ -47,8 +47,13 @@
           <#if alquiler?has_content>
               <#list alquiler as a>
               <tr>
-                  <td>${factura.id}</td>
-                  <td>${a.equipo.nombre}</td>
+                  <form action="/factura/eliminar/" method="post">
+                      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                      <input type="hidden" name="id" value="${a.id}">
+                      <td>${factura.id}</td>
+                      <td>${a.equipo.nombre}</td>
+                      <td><button type="submit"><@spring.message "borrar"/></button></td>
+                  </form>
               </tr>
 
               </#list>

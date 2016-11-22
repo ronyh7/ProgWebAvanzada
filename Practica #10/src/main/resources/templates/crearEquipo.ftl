@@ -37,19 +37,21 @@
         <div class="col-md-3"></div>
         <div class="col-md-4">
             <h1><@spring.message "insertar_equipo"/></h1>
-            <form th:action="@{/crearEquipo}" th:object="${equipo}" method="POST">
+            <form id="upload-file-form" th:action="@{/crearEquipo}" th:object="${equipo}"  enctype='multipart/form-data' method="POST">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
-                <label><@spring.message "nombre"/>:</label> <input name="nombre" type="text"/><br/>
-                <label><@spring.message "descripcion"/>:</label> <textarea name="descripcion" maxlength="500"></textarea><br/>
-                <label><@spring.message "cantidad"/>:</label><input name="cantidad" type="number"/><br/>
-                <label><@spring.message "costo"/>:</label><input name="cobroDia" type="number"/><br/>
+                <label><@spring.message "nombre"/>:</label> <input name="nombre" type="text" required="true"/><br/>
+                <label><@spring.message "descripcion"/>:</label> <textarea name="descripcion" required="true" maxlength="500"></textarea><br/>
+                <label><@spring.message "cantidad"/>:</label><input name="cantidad" type="number" required="true"/><br/>
+                <label><@spring.message "costo"/>:</label><input name="cobroDia" type="number" required="true"/><br/>
                 <label><@spring.message "sub_familia"/>:</label>
                 <select class="form-control" id="subFamiliaEquipo" name="subFamilia">
                 <#list familias as s>
                     <option value="${s.id}">${s.nombre}</option>
                 </#list>
                 </select>
+                <label for="upload-file-input"><@spring.message "foto" />:</label>
+                <input id="upload-file-input" type="file" name="uploadfile" accept="*" required="true"/>
                 <button name="Insertar" type="submit"><@spring.message "insertar_equipo"/></button>
             </form>
         </div>

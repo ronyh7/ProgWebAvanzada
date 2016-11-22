@@ -22,7 +22,7 @@
                     <li><a href="/familia/"><@spring.message "familias"/></a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/factual/?id=0"><@spring.message "facturaAC"/></a></li>
+                    <li><a href="/factual/"><@spring.message "facturaAC"/></a></li>
                     <li><a href="/factura/facturas"><@spring.message "facturas"/></a></li>
                     <#if usuario.username == " ">
                         <li><a href="/login">Login</a></li>

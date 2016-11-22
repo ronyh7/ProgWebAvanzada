@@ -8,11 +8,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import practica10.entidades.*;
 import practica10.servicios.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -74,52 +79,45 @@ public class IndexController {
     }
 
     @RequestMapping("/factual")
-    public String actual(@RequestParam("id") int id,Model model, HttpServletRequest request){
+    public String actual(Model model, HttpServletRequest request){
         Factura factura;
-        if(id==0){
-            if(request.getSession().getAttribute("factura")==null){
-                factura = new Factura();
-            }
-            else {
-                int idf = (Integer) request.getSession().getAttribute("factura");
-                factura = facturaServices.facturaID(idf);
-            }
-            String user =SecurityContextHolder.getContext().getAuthentication().getName();
-            Usuario u = usuarioServices.user(user);
-            //u.setUsername(user);
-            if(user.equals("anonymousUser"))
-                u.setUsername(" ");
-            model.addAttribute("usuario",u);
-            model.addAttribute("factura",factura);
-            model.addAttribute("alquiler",factura.getEquiposAlquilados());
-            return "/factura";
-
+        if(request.getSession().getAttribute("factura")==null){
+            factura = new Factura();
         }
         else {
-            factura = facturaServices.facturaID(id);
-            ArrayList<Alquiler> alquiler = new ArrayList<>();
-            for(int i=0; i < factura.getEquiposAlquilados().size();i++){
-                if(!factura.getEquiposAlquilados().get(i).isDevuelto())
-                    alquiler.add(factura.getEquiposAlquilados().get(i));
-            }
-            String user =SecurityContextHolder.getContext().getAuthentication().getName();
-            Usuario u = new Usuario();
-            u.setUsername(user);
-            if(user.equals("anonymousUser"))
-                u.setUsername(" ");
-            model.addAttribute("usuario",u);
-            model.addAttribute("factura",factura);
-            model.addAttribute("alquiler",factura.getEquiposAlquilados());
-            model.addAttribute("fecha",new Date());
-            return "/facturaD";
+            int idf = (Integer) request.getSession().getAttribute("factura");
+            factura = facturaServices.facturaID(idf);
+
         }
+        String user =SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario u = usuarioServices.user(user);
+        //u.setUsername(user);
+        if(user.equals("anonymousUser"))
+            u.setUsername(" ");
+        model.addAttribute("usuario",u);
+        model.addAttribute("factura",factura);
+        model.addAttribute("alquiler",factura.getEquiposAlquilados());
+        return "/factura";
 
     }
 
     @PostMapping("/crearCliente")
     @Transactional
-    public String crearCliente(@ModelAttribute Usuario cliente){
+    public String crearCliente(@ModelAttribute Usuario cliente, @RequestParam("uploadfile") MultipartFile uploadfile){
+        String filename = cliente.getCedula() + "_" + uploadfile.getOriginalFilename();
+        String directory="C:/clientes/";
+        try {
+            String filepath = Paths.get(directory, filename).toString();
+            BufferedOutputStream stream = null;
+            stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
+            stream.write(uploadfile.getBytes());
+            stream.close();
+        }catch (Exception e){
+
+        }
+        cliente.setImagen(filename);
         usuarioServices.creacionUsuario(cliente);
+
         Rol rol = new Rol();
         rol.setUsuario(cliente);
         rol.setRol("ROLE_CLIENTE");
@@ -134,30 +132,32 @@ public class IndexController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario u = usuarioServices.user(auth.getName());
         Equipo equipo = equipoServices.equipoByID(id);
-        Alquiler alquiler = new Alquiler();
-        alquiler.setEquipo(equipo);
-        alquiler.setDevuelto(false);
-        Factura factura = new Factura();
+        if(equipo.getCantidad()>0) {
+            Alquiler alquiler = new Alquiler();
+            alquiler.setEquipo(equipo);
+            alquiler.setDevuelto(false);
+            Factura factura = new Factura();
 
-        if(request.getSession().getAttribute("factura")==null) {
-            factura.setActiva(false);
-            factura.setFacturada(false);
-            factura.setCliente(u);
-            facturaServices.creacionFactura(factura);
-            request.getSession().setAttribute("factura",factura.getId());
-            System.out.println("1");
+            if (request.getSession().getAttribute("factura") == null) {
+                factura.setActiva(false);
+                factura.setFacturada(false);
+                factura.setCliente(u);
+                facturaServices.creacionFactura(factura);
+                request.getSession().setAttribute("factura", factura.getId());
+                System.out.println("1");
+            } else {
+                int fid = (Integer) request.getSession().getAttribute("factura");
+                factura = facturaServices.facturaID(fid);
+                System.out.println("2");
+            }
+            alquiler.setFactura(factura);
+            alquilerServices.creacionAlquiler(alquiler);
+            model.addAttribute("alquiler",alquiler);
         }
-        else{
-            int fid = (Integer) request.getSession().getAttribute("factura");
-            factura = facturaServices.facturaID(fid);
-            System.out.println("2");
-        }
-        alquiler.setFactura(factura);
-        alquilerServices.creacionAlquiler(alquiler);
         List<Equipo> equipos = equipoServices.equipos();
         model.addAttribute("usuario",u);
         model.addAttribute("equipos",equipos);
-        model.addAttribute("alquiler",alquiler);
+
 
         return "/indice";
     }

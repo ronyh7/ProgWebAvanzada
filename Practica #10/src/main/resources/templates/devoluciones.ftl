@@ -35,12 +35,14 @@
   <#include "header.ftl">
   <div class="col-md-4 col-md-offset-4">
       <h1><@spring.message "factura"/></h1>
+      <h2><@spring.message "dias"/>:${dias}</h2>
 
       <table class="table table-bordered">
           <thead>
           <tr>
               <th>ID</th>
               <th><@spring.message "equipos"/></th>
+              <th><@spring.message "costo"/></th>
           </tr>
           </thead>
           <tbody>
@@ -49,12 +51,14 @@
               <tr>
                   <td>${factura.id}</td>
                   <td>${a.equipo.nombre}</td>
+                  <td>${a.equipo.cobroDia}</td>
               </tr>
               </#list>
             <#else>
                 <tr>
                     <td>${factura.id}</td>
                     <td>${alquiler.equipo.nombre}</td>
+                    <td>${alquiler.equipo.cobroDia}</td>
                 </tr>
           </#if>
           </tbody>
@@ -63,7 +67,7 @@
           <form action="/factura/devolverM" method="POST">
               <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
               <input type="hidden" name="id" value="${factura.id}" />
-              <label>Total:${total}</label>
+              <h5><label>Total:${total}</label></h5>&nbsp;
               <button><@spring.message "pagar"/></button>
           </form>
         <#else>

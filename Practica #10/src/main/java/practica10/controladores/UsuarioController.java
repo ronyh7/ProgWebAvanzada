@@ -69,7 +69,7 @@ public class UsuarioController {
     @Transactional
     public String nuevoUsuario(@ModelAttribute Usuario usuario, @RequestParam("roles") String[] roles, @RequestParam("uploadfile") MultipartFile uploadfile) {
         String filename = usuario.getCedula() + "_" + uploadfile.getOriginalFilename();
-        String directory="/home/rony/alquiler";
+        String directory="C:/clientes/";
         try {
             String filepath = Paths.get(directory, filename).toString();
             BufferedOutputStream stream = null;

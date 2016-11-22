@@ -14,7 +14,7 @@
         <h1><@spring.message "nueva_familia"/></h1>
         <form action="/familia/crearFamilia" th:object="${familia}" method="POST" >
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <label><@spring.message "familia"/>:</label> <input name="nombre" type="text"></>
+            <label><@spring.message "familia"/>:</label> <input name="nombre" type="text" required="true"></>
         <button name="Insertar" id="insertar" type="submit"><@spring.message "nueva_familia"/></button>
         </form>
     </div>

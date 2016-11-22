@@ -85,7 +85,6 @@ public class FamiliaController {
         FamiliaEquipo fa = familiaServices.familiaID(subFamiliaEquipo.getfID());
         subFamiliaEquipo.setFamiliaEquipo(fa);
         subFamiliaServices.creacionSubFamilia(subFamiliaEquipo);
-        System.out.println("HELL");
 
         List<SubFamiliaEquipo> familias = subFamiliaServices.subFamiliasFamilia(fa);
         String user =SecurityContextHolder.getContext().getAuthentication().getName();

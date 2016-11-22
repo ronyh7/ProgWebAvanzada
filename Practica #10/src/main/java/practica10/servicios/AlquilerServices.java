@@ -20,7 +20,7 @@ public class AlquilerServices {
     @Autowired
     private AlquilerRepository alquilerRepository;
 
-    public long cantidadProfesores(){
+    public long cantidadAlquileres(){
         return alquilerRepository.count();
     }
 
@@ -42,6 +42,10 @@ public class AlquilerServices {
 
     public Alquiler alquilerID(int id){
         return alquilerRepository.consultaAlquiler(id);
+    }
+
+    public void borrarAlquiler(Alquiler alquiler){
+        alquilerRepository.delete(alquiler);
     }
 
     /**

@@ -33,7 +33,7 @@
         <form name="form1" action="/factura/devolver" method="get" >
             <input type="hidden" name="id" value="0"/>
             <input type="hidden" name="fid" value="${factura.id}">
-            <label><@spring.message "fecha"/>:</label> <input name="fecha" id="fecha" type="date"/>
+            <label><@spring.message "fecha"/>:</label> <input name="fecha" id="fecha" type="date" required="true"/>
         <button name="Insertar" type="submit"><@spring.message "devolver_equipos"/></button>
         </form>
     </div>

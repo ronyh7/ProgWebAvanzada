@@ -15,6 +15,7 @@ public class Equipo implements Serializable {
 
     private String nombre;
     private String descripcion;
+    private String imagen;
     private int cantidad;
     private int cobroDia;
     @ManyToOne
@@ -66,5 +67,13 @@ public class Equipo implements Serializable {
 
     public void setCobroDia(int cobroDia) {
         this.cobroDia = cobroDia;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

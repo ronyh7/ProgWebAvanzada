@@ -12,7 +12,6 @@ import java.util.List;
 public class Usuario implements Serializable{
     @Id
     private String username;
-
     private String nombre;
     private String apellido;
     private String cedula;

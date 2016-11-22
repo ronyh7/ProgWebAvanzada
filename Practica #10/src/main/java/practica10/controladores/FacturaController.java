@@ -63,10 +63,10 @@ public class FacturaController {
         if(user.equals("anonymousUser"))
             u.setUsername(" ");
         model.addAttribute("usuario",u);
-            model.addAttribute("factura",factura);
-            model.addAttribute("alquiler",alquiler);
-            model.addAttribute("fecha",new Date());
-            return "/facturaD";
+        model.addAttribute("factura",factura);
+        model.addAttribute("alquiler",alquiler);
+        model.addAttribute("fecha",new Date());
+        return "/facturaD";
 
     }
 
@@ -101,7 +101,6 @@ public class FacturaController {
         u.setUsername(user);
         if(user.equals("anonymousUser"))
             u.setUsername(" ");
-        System.out.println("STRING"+fechaS);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
         try {
@@ -137,6 +136,7 @@ public class FacturaController {
             model.addAttribute("alquiler",alquiler);
             model.addAttribute("cantidad",1);
         }
+        model.addAttribute("dias",dias);
         model.addAttribute("usuario",u);
         model.addAttribute("total",total);
         model.addAttribute("factura",factura);
@@ -145,19 +145,31 @@ public class FacturaController {
 
     @PostMapping("/facturar")
     @Transactional
-    public String facturar(@RequestParam int id){
+    public String facturar(@RequestParam int id,HttpServletRequest request){
         Factura factura = facturaServices.facturaID(id);
         for(int i=0; i < factura.getEquiposAlquilados().size();i++){
             Alquiler alquiler = factura.getEquiposAlquilados().get(i);
             alquiler.getEquipo().setCantidad(alquiler.getEquipo().getCantidad()-1);
             equipoServices.creacionEquipo(alquiler.getEquipo());
         }
+        request.getSession().setAttribute("factura",null);
         factura.setActiva(true);
         factura.setFacturada(true);
         factura.setFecha(new Date());
 
         return "redirect:/";
     }
+
+    @PostMapping("/eliminar")
+    @Transactional
+    public String eliminarAlquiler(@RequestParam int id,HttpServletRequest request){
+        Alquiler alquiler= alquilerServices.alquilerID(id);
+
+        alquilerServices.borrarAlquiler(alquiler);
+
+        return "redirect:/factual";
+    }
+
 
     @PostMapping("/devolver")
     @Transactional

@@ -13,7 +13,6 @@
 
 <body class="w3-light-grey">
 <#include "header.ftl">
-IMAGEN: ${usuario.imagen}
 
 
 <!-- w3-content defines a container for fixed size centered content,
@@ -32,8 +31,11 @@ and is wrapped around the whole page content, except for the footer in this exam
         <div class="w3-col l8 s12">
             <#if equipos?has_content>
                 <!-- Blog entry -->
+
                 <#list equipos as e>
                     <div class="w3-card-4 w3-margin w3-white">
+                        <img src="/archivos/${e.imagen}" alt="Nature" style="width:30%">
+
                         <div class="w3-container w3-padding-8">
                             <h3><b>${e.nombre}</b></h3>
 
@@ -61,8 +63,9 @@ and is wrapped around the whole page content, except for the footer in this exam
         <div class="w3-col l4">
             <!-- About Card -->
             <div class="w3-card-2 w3-margin w3-margin-top">
-                    <img src="/archivos/${usuario.imagen}" style="width:100%">
-
+                    <#if usuario.imagen != " ">
+                        <img src="/archivos/${usuario.imagen}" style="width:50%">
+                    </#if>
 
                 <div class="w3-container w3-white">
                     <h4><@spring.message "nombre_usuario"/>: <b>${usuario.username}</b></h4>

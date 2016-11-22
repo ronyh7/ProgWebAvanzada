@@ -14,7 +14,7 @@
             <h1><@spring.message "familias"/>: ${familia.nombre}</h1>
             <form action="/familia/crearSubFamilia" th:object="${subFamilia}" method="post" >
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <label><@spring.message "nueva_subfamilia"/>:</label> <input name="nombre" type="text"/>
+                <label><@spring.message "nueva_subfamilia"/>:</label> <input name="nombre" type="text" required="true"/>
                 <input type="hidden" name="fID" value="${familia.id}">
 
                 <button name="Insertar" id="insertar" type="submit"><@spring.message "confirmacion"/></button>
@@ -36,13 +36,15 @@
                         <td>${s.id}</td>
                         <td>${s.nombre}</td>
                         <td>
-                            <#list s.equipos as e>
+                            <#if s.equipos?has_content>
+                                <#list s.equipos as e>
 
-                                <ul>
-                                    <li>${e.nombre}</li>
-                                </ul>
+                                    <ul>
+                                        <li>${e.nombre}</li>
+                                    </ul>
 
-                            </#list>
+                                </#list>
+                            </#if>
                         </td>
                     </tr>
                     </#list>
