@@ -18,12 +18,16 @@
             <div>
                 <ul class="nav navbar-nav">
                     <li><a href="/">Home</a></li>
-                    <li><a href="/usuario/"><@spring.message "usuarios"/></a></li>
-                    <li><a href="/familia/"><@spring.message "familias"/></a></li>
+                    <#if usuario.admin == true>
+                        <li><a href="/usuario/"><@spring.message "usuarios"/></a></li>
+                        <li><a href="/familia/"><@spring.message "familias"/></a></li>
+                    </#if>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/factual/"><@spring.message "facturaAC"/></a></li>
-                    <li><a href="/factura/facturas"><@spring.message "facturas"/></a></li>
+                    <#if usuario.admin == true>
+                        <li><a href="/factura/facturas"><@spring.message "facturas"/></a></li>
+                    </#if>
                     <#if usuario.username == " ">
                         <li><a href="/login">Login</a></li>
                     <#else>

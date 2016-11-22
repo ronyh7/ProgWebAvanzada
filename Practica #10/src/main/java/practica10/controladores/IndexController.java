@@ -55,13 +55,16 @@ public class IndexController {
     public String getIndexPage(Model model, HttpServletRequest request) {
         List<Equipo> equipos = equipoServices.equipos();
         String user =SecurityContextHolder.getContext().getAuthentication().getName();
+
         Usuario u = new Usuario();
         if(user.equals("anonymousUser"))
             u.setUsername(" ");
         else
             u = usuarioServices.user(user);
-
-//        System.out.println("IMG: "+u.getImagen());
+        u.setAdmin(false);
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString().contains("ROLE_ADMIN")){
+            u.setAdmin(true);
+        }
 
         model.addAttribute("usuario",u);
         model.addAttribute("equipos",equipos);
@@ -90,10 +93,14 @@ public class IndexController {
 
         }
         String user =SecurityContextHolder.getContext().getAuthentication().getName();
-        Usuario u = usuarioServices.user(user);
-        //u.setUsername(user);
+        Usuario u = new Usuario();
+        u.setUsername(user);
         if(user.equals("anonymousUser"))
             u.setUsername(" ");
+        u.setAdmin(false);
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString().contains("ROLE_ADMIN")){
+            u.setAdmin(true);
+        }
         model.addAttribute("usuario",u);
         model.addAttribute("factura",factura);
         model.addAttribute("alquiler",factura.getEquiposAlquilados());
@@ -153,6 +160,10 @@ public class IndexController {
             alquiler.setFactura(factura);
             alquilerServices.creacionAlquiler(alquiler);
             model.addAttribute("alquiler",alquiler);
+        }
+        u.setAdmin(false);
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString().contains("ROLE_ADMIN")){
+            u.setAdmin(true);
         }
         List<Equipo> equipos = equipoServices.equipos();
         model.addAttribute("usuario",u);

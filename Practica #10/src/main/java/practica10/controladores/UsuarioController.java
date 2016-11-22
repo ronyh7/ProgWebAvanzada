@@ -53,6 +53,9 @@ public class UsuarioController {
         u.setUsername(user);
         if(user.equals("anonymousUser"))
             u.setUsername(" ");
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString().contains("ROLE_ADMIN")){
+            u.setAdmin(true);
+        }
         model.addAttribute("usuario",u);
         model.addAttribute("usuarios",usuarioServices.usuarios());
 

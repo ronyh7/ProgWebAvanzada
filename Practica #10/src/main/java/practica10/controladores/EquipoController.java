@@ -57,6 +57,9 @@ public class EquipoController {
         u.setUsername(user);
         if(user.equals("anonymousUser"))
             u.setUsername(" ");
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString().contains("ROLE_ADMIN")){
+            u.setAdmin(true);
+        }
         model.addAttribute("usuario",u);
         model.addAttribute("equipos",equipos);
         return "/equipos";
@@ -70,6 +73,9 @@ public class EquipoController {
         u.setUsername(user);
         if(user.equals("anonymousUser"))
             u.setUsername(" ");
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString().contains("ROLE_ADMIN")){
+            u.setAdmin(true);
+        }
         model.addAttribute("usuario",u);
         model.addAttribute("equipo", new Equipo());
         model.addAttribute("familias", subFamiliaServices.subFamiliasFamilia(fa));

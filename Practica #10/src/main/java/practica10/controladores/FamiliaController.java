@@ -55,6 +55,9 @@ public class FamiliaController {
         u.setUsername(user);
         if(user.equals("anonymousUser"))
             u.setUsername(" ");
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString().contains("ROLE_ADMIN")){
+            u.setAdmin(true);
+        }
         model.addAttribute("usuario",u);
         model.addAttribute("familia", new FamiliaEquipo());
         model.addAttribute("familias",familias);
@@ -72,6 +75,9 @@ public class FamiliaController {
         u.setUsername(user);
         if(user.equals("anonymousUser"))
             u.setUsername(" ");
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString().contains("ROLE_ADMIN")){
+            u.setAdmin(true);
+        }
         model.addAttribute("usuario",u);
         model.addAttribute("familia", fa);
         model.addAttribute("subFamilia", new SubFamiliaEquipo());
@@ -92,6 +98,9 @@ public class FamiliaController {
         u.setUsername(user);
         if(user.equals("anonymousUser"))
             u.setUsername(" ");
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString().contains("ROLE_ADMIN")){
+            u.setAdmin(true);
+        }
         model.addAttribute("usuario",u);
         model.addAttribute("familia", fa);
         model.addAttribute("subFamilia", new SubFamiliaEquipo());
@@ -113,6 +122,9 @@ public class FamiliaController {
         u.setUsername(user);
         if(user.equals("anonymousUser"))
             u.setUsername(" ");
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString().contains("ROLE_ADMIN")){
+            u.setAdmin(true);
+        }
         model.addAttribute("usuario",u);
         model.addAttribute("familia", new FamiliaEquipo());
         model.addAttribute("familias",familias);

@@ -62,6 +62,9 @@ public class FacturaController {
         u.setUsername(user);
         if(user.equals("anonymousUser"))
             u.setUsername(" ");
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString().contains("ROLE_ADMIN")){
+            u.setAdmin(true);
+        }
         model.addAttribute("usuario",u);
         model.addAttribute("factura",factura);
         model.addAttribute("alquiler",alquiler);
@@ -88,6 +91,9 @@ public class FacturaController {
         u.setUsername(user);
         if(user.equals("anonymousUser"))
             u.setUsername(" ");
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString().contains("ROLE_ADMIN")){
+            u.setAdmin(true);
+        }
         model.addAttribute("usuario",u);
         model.addAttribute("facturasA",facturasA);
         model.addAttribute("facturasP",facturasP);
@@ -101,6 +107,9 @@ public class FacturaController {
         u.setUsername(user);
         if(user.equals("anonymousUser"))
             u.setUsername(" ");
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString().contains("ROLE_ADMIN")){
+            u.setAdmin(true);
+        }
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
         try {
@@ -121,10 +130,8 @@ public class FacturaController {
             model.addAttribute("cantidad",factura.getEquiposAlquilados().size());
             if(factura.getEquiposAlquilados().size()>1) {
                 model.addAttribute("alquiler", new Alquiler());
-                model.addAttribute("usuario", u);
             }
             else {
-                model.addAttribute("usuario", u);
                 model.addAttribute("alquiler", factura.getEquiposAlquilados().get(0));
             }
         }
@@ -132,7 +139,6 @@ public class FacturaController {
             Alquiler alquiler = alquilerServices.alquilerID(id);
             if(!alquiler.isDevuelto())
                 total += alquiler.getEquipo().getCobroDia()*dias;
-            model.addAttribute("usuario",u);
             model.addAttribute("alquiler",alquiler);
             model.addAttribute("cantidad",1);
         }
@@ -181,7 +187,6 @@ public class FacturaController {
         equipoServices.creacionEquipo(equipo);
         alquilerServices.creacionAlquiler(alquiler);
         if(alquiler.getFactura().isVacia()){
-            System.out.println("WEYYY");
             alquiler.getFactura().setActiva(false);
             facturaServices.creacionFactura(alquiler.getFactura());
         }

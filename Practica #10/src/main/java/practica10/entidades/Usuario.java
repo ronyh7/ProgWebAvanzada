@@ -20,28 +20,26 @@ public class Usuario implements Serializable{
     private int enabled;
     private String imagen;
 
+
     @OneToMany(mappedBy = "usuario")
     private List<Rol> roles;
 
     @Transient
     private String rolesTemp;
-
+    @Transient
+    private boolean admin;
 
     public Usuario(){
         this.username=" ";
         this.imagen=" ";
         this.setEnabled(1);
+        this.admin=false;
     }
 
 
 
 
-    public boolean isAdmin(){
-        if(getRol().equals("admin"))
-            return true;
 
-        return false;
-    }
 
     public String getNombre() {
         return nombre;
@@ -113,5 +111,13 @@ public class Usuario implements Serializable{
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }
