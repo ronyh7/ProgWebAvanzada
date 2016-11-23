@@ -20,8 +20,12 @@ public interface FacturaRepository extends JpaRepository<Factura, Long> {
     @Override
     List<Factura> findAll();
 
-    @Query("select u from Factura u where u.cliente = :cliente")
+    @Query("select u from Factura u where u.cliente = :cliente order by u.fecha")
     List<Factura> findByCliente(@Param("cliente") Usuario cliente);
+    @Query("select f from Factura f where f.facturada = true and f.activa=true")
+    List<Factura> findActivas();
+    @Query("select f from Factura f where f.facturada=true and f.activa=false")
+    List<Factura> findPasadas();
 
 
 

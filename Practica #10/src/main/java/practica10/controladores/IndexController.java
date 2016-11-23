@@ -81,6 +81,17 @@ public class IndexController {
         return "/crearCliente";
     }
 
+    @RequestMapping("/graficos")
+    public String graficos(Model model){
+        Usuario u = new Usuario();
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString().contains("ROLE_ADMIN")){
+            u.setAdmin(true);
+        }
+
+        model.addAttribute("usuario",u);
+        return "/graficos";
+    }
+
     @RequestMapping("/factual")
     public String actual(Model model, HttpServletRequest request){
         Factura factura;

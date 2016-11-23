@@ -63,7 +63,7 @@
       <form action="/factura/facturar/" method="POST">
           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
           <input type="hidden" name="id" value="${factura.id}" />
-          <label>Total:${factura.total}</label>
+          <label><@spring.message "costo"/>:${factura.total}</label>
           <button><@spring.message "rentar"/></button>
       </form>
   </div>

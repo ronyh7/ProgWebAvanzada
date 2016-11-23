@@ -16,6 +16,8 @@ public interface AlquilerRepository extends JpaRepository<Alquiler, Long> {
     @Override
     Alquiler findOne(Long aLong);
 
+    //List<Alquiler> findAll();
+
 
     //Documentación de algunas formas de hacer las consultas.
     //http://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
@@ -26,6 +28,12 @@ public interface AlquilerRepository extends JpaRepository<Alquiler, Long> {
     //Trabajando con los querys de HQL.
     @Query("select a from Alquiler a where a.id = :id")
     Alquiler consultaAlquiler(@Param("id") int id);
+
+    @Query("select avg(u.diasAlquilado), u.equipo.familia.nombre from Alquiler u where u.devuelto='true' group by u.equipo.familia.id")
+    List<Object> diasSubfamilias();
+
+    @Query("select avg(u.diasAlquilado), u.equipo.familia.familia.nombre from Alquiler u where u.devuelto='true' group by u.equipo.familia.familia.id")
+    List<Object> diasFamilias();
 
 
 }

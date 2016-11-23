@@ -48,6 +48,14 @@ public class AlquilerServices {
         alquilerRepository.delete(alquiler);
     }
 
+    public List<Object> subFamiliasAlquiladas(){
+        return alquilerRepository.diasSubfamilias();
+    }
+
+    public List<Object> familiasAlquiladas(){
+        return alquilerRepository.diasFamilias();
+    }
+
     /**
      *
      * @param nombre

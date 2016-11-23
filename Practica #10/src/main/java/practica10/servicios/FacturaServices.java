@@ -39,6 +39,12 @@ public class FacturaServices {
 
         return facturaRepository.findAll();
     }
+    public List<Factura> activas(){
+        return facturaRepository.findActivas();
+    }
+    public List<Factura> pasadas(){
+        return facturaRepository.findPasadas();
+    }
 
     public List<Factura> facturaUsuario(Usuario usuario){
         return facturaRepository.findByCliente(usuario);

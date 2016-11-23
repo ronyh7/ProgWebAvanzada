@@ -73,19 +73,44 @@ public class FacturaController {
 
     }
 
-    @RequestMapping("/facturas")
-    public String listarUsuarios(Model model, HttpServletRequest request){
-        List<Factura> facturas = facturaServices.facturas();
-        ArrayList<Factura> facturasA = new ArrayList<>();
-        ArrayList<Factura> facturasP = new ArrayList<>();
-        for (int i=0; i < facturas.size();i++){
-            if(facturas.get(i).isActiva()){
-                facturasA.add(facturas.get(i));
-            }
-            else{
-                facturasP.add(facturas.get(i));
+    @RequestMapping("/alquileres")
+    public String listarAlquileres(@RequestParam("nombre") String nombre, Model model){
+
+        Factura factura= new Factura();
+        if(!nombre.equals("0")){
+            Usuario usuario = usuarioServices.user(nombre);
+            System.out.println("N: "+nombre);
+            System.out.println("U: "+usuario.getCedula());
+            List<Factura> facturasp = facturaServices.facturaUsuario(usuario);
+            System.out.println("SIZE: "+facturasp.size());
+
+            for(int i=0;i<facturasp.size();i++){
+                for(int j=0;j<facturasp.get(i).getEquiposAlquilados().size();j++){
+                    if(!facturasp.get(i).getEquiposAlquilados().get(j).isDevuelto()){
+                        Alquiler alquiler = facturasp.get(i).getEquiposAlquilados().get(j);
+                        factura.getEquiposAlquilados().add(alquiler);
+                    }
+                }
             }
         }
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario u = new Usuario();
+        u.setUsername(user);
+        if(user.equals("anonymousUser"))
+            u.setUsername(" ");
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString().contains("ROLE_ADMIN")){
+            u.setAdmin(true);
+        }
+        model.addAttribute("usuario",u);
+        model.addAttribute("alquiler",factura.getEquiposAlquilados());
+        model.addAttribute("factura",factura);
+        return "/alquilerCliente";
+    }
+
+    @RequestMapping("/facturas")
+    public String listarUsuarios(Model model, HttpServletRequest request){
+        List<Factura> facturasA = facturaServices.activas();
+        List<Factura> facturasP = facturaServices.pasadas();
         String user =SecurityContextHolder.getContext().getAuthentication().getName();
         Usuario u = new Usuario();
         u.setUsername(user);
@@ -124,9 +149,12 @@ public class FacturaController {
 
         if(id==0){
             for (int i=0; i < factura.getEquiposAlquilados().size();i++){
-                if(!factura.getEquiposAlquilados().get(i).isDevuelto())
-                    total+=factura.getEquiposAlquilados().get(i).getEquipo().getCobroDia()*dias;
+                if(!factura.getEquiposAlquilados().get(i).isDevuelto()) {
+                    total += factura.getEquiposAlquilados().get(i).getEquipo().getCobroDia() * dias;
+                    factura.getEquiposAlquilados().get(i).setDiasAlquilado(dias);
+                }
             }
+            facturaServices.creacionFactura(factura);
             model.addAttribute("cantidad",factura.getEquiposAlquilados().size());
             if(factura.getEquiposAlquilados().size()>1) {
                 model.addAttribute("alquiler", new Alquiler());
@@ -137,8 +165,11 @@ public class FacturaController {
         }
         else{
             Alquiler alquiler = alquilerServices.alquilerID(id);
-            if(!alquiler.isDevuelto())
-                total += alquiler.getEquipo().getCobroDia()*dias;
+            if(!alquiler.isDevuelto()) {
+                total += alquiler.getEquipo().getCobroDia() * dias;
+                alquiler.setDiasAlquilado(dias);
+                alquilerServices.creacionAlquiler(alquiler);
+            }
             model.addAttribute("alquiler",alquiler);
             model.addAttribute("cantidad",1);
         }
@@ -149,6 +180,10 @@ public class FacturaController {
         return "/devoluciones";
     }
 
+    @PostMapping("/alquileres")
+    public String alquiler(@RequestParam String nombre){
+        return "redirect:/factura/alquileres?nombre="+nombre;
+    }
     @PostMapping("/facturar")
     @Transactional
     public String facturar(@RequestParam int id,HttpServletRequest request){
