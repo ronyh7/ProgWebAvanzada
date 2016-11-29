@@ -60,37 +60,4 @@ public class RestApiController {
         String result = gson.toJson(mensajeValidador);
         return result;
     }*/
-
-    private class MensajeValidador{
-        private String mensaje;
-        private boolean valido;
-
-        public MensajeValidador(String mensaje, boolean valido) {
-            this.mensaje = mensaje;
-            this.valido = valido;
-        }
-
-        public MensajeValidador() {
-        }
-
-        public String getMensaje() {
-            return mensaje;
-        }
-
-        public void setMensaje(String mensaje) {
-            this.mensaje = mensaje;
-        }
-
-        public boolean isValido() {
-            return valido;
-        }
-
-        public void setValido(boolean valido) {
-            this.valido = valido;
-        }
-    }
-
-
-
-
 }

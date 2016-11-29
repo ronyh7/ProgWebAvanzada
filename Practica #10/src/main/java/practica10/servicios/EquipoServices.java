@@ -1,6 +1,8 @@
 package practica10.servicios;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import practica10.entidades.Equipo;
@@ -43,6 +45,10 @@ public class EquipoServices {
 
     public Equipo equipoByID(int id){
         return equipoRepository.findById(id);
+    }
+
+    public Page<Equipo> rango(PageRequest p){
+        return equipoRepository.findAll(p);
     }
 
 

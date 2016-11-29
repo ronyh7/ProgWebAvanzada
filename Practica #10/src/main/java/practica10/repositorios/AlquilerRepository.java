@@ -29,6 +29,7 @@ public interface AlquilerRepository extends JpaRepository<Alquiler, Long> {
     @Query("select a from Alquiler a where a.id = :id")
     Alquiler consultaAlquiler(@Param("id") int id);
 
+
     @Query("select avg(u.diasAlquilado), u.equipo.familia.nombre from Alquiler u where u.devuelto='true' group by u.equipo.familia.id")
     List<Object> diasSubfamilias();
 

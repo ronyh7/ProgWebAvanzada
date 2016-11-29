@@ -2,6 +2,9 @@ package practica10.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.Lifecycle;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -50,10 +53,22 @@ public class IndexController {
     @Autowired
     RolServices rolServices;
 
-
     @RequestMapping("/")
-    public String getIndexPage(Model model, HttpServletRequest request) {
-        List<Equipo> equipos = equipoServices.equipos();
+    public String index(){
+        return "redirect:/indice?p=0";
+    }
+
+    @RequestMapping("/indice")
+    public String getIndexPage(@RequestParam("p") int p, Model model, HttpServletRequest request) {
+        if(p<0)
+            p=0;
+        PageRequest page = new PageRequest(p,4, Sort.Direction.DESC,"cantidad");
+        Page<Equipo> equipo = equipoServices.rango(page);
+        if(equipo.getContent().size()==0){
+            page = new PageRequest(0,4);
+            equipo= equipoServices.rango(page);
+        }
+        List<Equipo> equipos = equipo.getContent();
         String user =SecurityContextHolder.getContext().getAuthentication().getName();
 
         Usuario u = new Usuario();
@@ -65,7 +80,7 @@ public class IndexController {
         if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString().contains("ROLE_ADMIN")){
             u.setAdmin(true);
         }
-
+        model.addAttribute("p",p);
         model.addAttribute("usuario",u);
         model.addAttribute("equipos",equipos);
         model.addAttribute("alquiler", new Alquiler());
@@ -181,7 +196,7 @@ public class IndexController {
         model.addAttribute("equipos",equipos);
 
 
-        return "/indice";
+        return "redirect:/";
     }
 
 

@@ -57,7 +57,11 @@ and is wrapped around the whole page content, except for the footer in this exam
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                             <div class="w3-col m8 s12">
                                                 <h5><@spring.message "costo"/>:<b>${e.cobroDia}</b></h5>
-                                            <p><button class="w3-btn w3-padding-large w3-white w3-border w3-hover-border-black"><b><@spring.message "rentar"/></b></button></p>
+                                                <#if e.cantidad lt 1>
+                                                    <p><button disabled="disabled" class="w3-btn w3-disabled w3-padding-large w3-white w3-border w3-hover-border-black"><b><@spring.message "rentar"/></b></button> </p>
+                                                <#else>
+                                                    <p><button class="w3-btn w3-padding-large w3-white w3-border w3-hover-border-black"><b><@spring.message "rentar"/></b></button></p>
+                                                </#if>
                                         </div>
                                         </form>
                                     </div>
@@ -91,11 +95,13 @@ and is wrapped around the whole page content, except for the footer in this exam
             <!-- END w3-content -->
         </div>
     </div>
+    <footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">
+        <a href="/indice?p=${p-1}" class="w3-btn w3-padding-large w3-margin-bottom">Previous</a>
+        <a href="/indice?p=${p+1}" class="w3-btn w3-padding-large w3-margin-bottom">Next »</a>
+    </footer>
 </div>
 
 <!-- Footer -->
-
-
 
 
 
