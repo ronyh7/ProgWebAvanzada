@@ -39,6 +39,7 @@ public class Login extends UI{
         TextField password=new TextField("Password");
         TextField correo = new TextField("Correo");
         TextField nombre= new TextField("Nombre");
+        Label nombreC = new Label("Si desea cambiar el nombre o correo utilizado en la sesion anterior, puede hacerlo ahora");
         correo.addValidator(new EmailValidator("debe ser un correo valido"));
         if(usuarioService.usuarios().size() <= 0){
             Usuario usuario = new Usuario();
@@ -70,9 +71,10 @@ public class Login extends UI{
 
         absoluteLayout.addComponent(username,"left: 600px; top: 150px;");
         absoluteLayout.addComponent(password,"left: 600px; top: 225px;");
-        absoluteLayout.addComponent(nombre,"left:600px; top:300px;");
-        absoluteLayout.addComponent(correo,"left: 600px; top: 375px;");
-        absoluteLayout.addComponent(save,"left: 650px; top: 450px;");
+        absoluteLayout.addComponent(nombreC,"left:600px; top:300px;");
+        absoluteLayout.addComponent(nombre,"left:600px; top:350px;");
+        absoluteLayout.addComponent(correo,"left: 600px; top: 425px;");
+        absoluteLayout.addComponent(save,"left: 650px; top: 475px;");
         VerticalLayout vertical = new VerticalLayout();
         vertical.addComponent(absoluteLayout);
         setContent(absoluteLayout);

@@ -29,8 +29,7 @@ public class EmailServices {
 
 
     @Scheduled(fixedRate = 10000)
-    public void reportCurrentTime(){
-        System.out.println("YEAH");
+    public void notificaciones(){
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTime(new Date());
         int minutos = 5;
@@ -38,11 +37,11 @@ public class EmailServices {
         List<Evento> eventos = eventoServices.eventos();
         for(Evento evento: eventos){
             long diff = cal.getTime().getTime() - evento.getFechaInicio().getTime();
-            System.out.println(diff);
             if(diff > 0 && !evento.isNotificacionEnviada()){
                 Usuario u = usuarioServices.user("admin");
                 String correo="palomoUnDosTres@gmail.com";
-                sendMail(correo,u.getCorreo(),evento.getDescripcion(),evento.getTitulo());
+                String mensaje="Evento: "+evento.getTitulo()+" estara pasando en: "+evento.getFechaInicio();
+                sendMail(correo,u.getCorreo(),evento.getDescripcion(),mensaje);
                 evento.setNotificacionEnviada(true);
                 eventoServices.creacionEvento(evento);
             }

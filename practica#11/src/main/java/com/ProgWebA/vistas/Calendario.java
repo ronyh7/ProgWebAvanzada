@@ -62,7 +62,6 @@ public class Calendario extends UI {
         calendario.setContainerDataSource(beanItemContainer, "titulo",
                 "descripcion", "fechaInicio", "fechaFin","box");
         Button guardar = new Button("Guardar Calendario");
-        Button enviar = new Button("Enviar");
 
         guardar.addClickListener(new Button.ClickListener() {
             @Override
@@ -74,26 +73,7 @@ public class Calendario extends UI {
             }
         });
 
-        enviar.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                email.reportCurrentTime();
-            }
-        });
 
-
-
-
-
-
-        //propiedades del layout.
-
-        /*vli.setComponentAlignment(botonError, Alignment.MIDDLE_CENTER);
-        vli.setComponentAlignment(botonFormularios, Alignment.MIDDLE_CENTER);
-        vli.setComponentAlignment(botonCalendario, Alignment.MIDDLE_CENTER);
-        vli.setComponentAlignment(botonQrCode, Alignment.MIDDLE_CENTER);*/
-
-        //
         VerticalLayout vl = new VerticalLayout();
         HorizontalLayout hl = new HorizontalLayout();
         hl.addComponent(calendario);

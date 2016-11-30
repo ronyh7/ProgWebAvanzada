@@ -11,7 +11,6 @@ import java.util.List;
  */
 @Entity
 public class Factura implements Serializable {
-
     @Id
     @GeneratedValue
     private int id;

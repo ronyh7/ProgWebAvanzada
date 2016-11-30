@@ -65,7 +65,7 @@ public class IndexController {
         PageRequest page = new PageRequest(p,4, Sort.Direction.DESC,"cantidad");
         Page<Equipo> equipo = equipoServices.rango(page);
         if(equipo.getContent().size()==0){
-            page = new PageRequest(0,4);
+            page = new PageRequest(0,4,Sort.Direction.DESC,"cantidad");
             equipo= equipoServices.rango(page);
         }
         List<Equipo> equipos = equipo.getContent();
@@ -177,11 +177,9 @@ public class IndexController {
                 factura.setCliente(u);
                 facturaServices.creacionFactura(factura);
                 request.getSession().setAttribute("factura", factura.getId());
-                System.out.println("1");
             } else {
                 int fid = (Integer) request.getSession().getAttribute("factura");
                 factura = facturaServices.facturaID(fid);
-                System.out.println("2");
             }
             alquiler.setFactura(factura);
             alquilerServices.creacionAlquiler(alquiler);

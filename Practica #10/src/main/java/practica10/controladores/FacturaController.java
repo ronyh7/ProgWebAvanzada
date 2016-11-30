@@ -184,6 +184,7 @@ public class FacturaController {
     public String alquiler(@RequestParam String nombre){
         return "redirect:/factura/alquileres?nombre="+nombre;
     }
+
     @PostMapping("/facturar")
     @Transactional
     public String facturar(@RequestParam int id,HttpServletRequest request){
@@ -197,7 +198,6 @@ public class FacturaController {
         factura.setActiva(true);
         factura.setFacturada(true);
         factura.setFecha(new Date());
-
         return "redirect:/";
     }
 
